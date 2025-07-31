@@ -1,0 +1,62 @@
+header {
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  .links,
+  .logInHeader,
+  .nav {
+    display: flex;
+    align-items: center;
+    animation: fadeInUp 0.8s ease-in;
+  }
+
+  .links {
+    justify-content: space-around;
+    & > * {
+      margin-right: 42px;
+      position: relative;
+      transition: transform 0.2s, color 0.2s;
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 100%;
+        height: 2px;
+        background: #ff9800;
+        opacity: 0;
+        transform: scaleX(0);
+        transition: opacity 0.2s, transform 0.2s;
+      }
+      &:hover {
+        transform: translateY(-4px) scale(1.08);
+        color: #ff9800;
+        &::after {
+          opacity: 1;
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+
+  .LogInHeaderItem {
+    margin: 0 5px;
+    transition: transform 0.2s;
+    &:hover {
+      transform: scale(1.1) rotate(-2deg);
+    }
+    img {
+      max-width: 50px;
+      max-height: 50px;
+      transition: filter 0.3s, transform 0.3s;
+      &:hover {
+        filter: brightness(1.2) drop-shadow(0 0 8px #ff9800);
+        transform: scale(1.15);
+      }
+    }
+  }
+}
