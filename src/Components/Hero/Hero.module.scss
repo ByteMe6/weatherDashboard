@@ -1,0 +1,94 @@
+.hero {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background-color: rgba(0, 0, 0, 0.361);
+  position: relative;
+  overflow: hidden;
+
+    &__backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    opacity: 0.8;
+  }
+
+  &__backgroundVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    object-fit: cover;
+    z-index: -3;
+  }
+
+  &__title {
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 40px;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 80px;
+    text-align: center;
+  }
+  &__box {
+    display: flex;
+    justify-content: center;
+    gap: 52px;
+  }
+  &__text {
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 500;
+    width: 345px;
+    text-align: left;
+    margin: 0;
+
+    &:nth-child(1) {
+      text-align: right;
+    }
+  }
+  &__line {
+    width: 3px;
+    height: 144px;
+    background: #fff;
+    border-radius: 10px;
+  }
+  &__form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+  }
+  &__input {
+    width: 580px;
+    height: 42px;
+    padding: 0;
+    padding-left: 29px;
+    font-size: 16px;
+    border-radius: 10px 0 0 10px;
+    background: #d9d9d9;
+    border: none;
+  }
+  &__button {
+    border-radius: 0 10px 10px 0;
+    border: none;
+    border-left: 1.5px solid #000000b4;
+    background: #ffb36c;
+    width: 45px;
+    height: 42px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.hero .content {
+  position: relative;
+  z-index: 1;
+  color: white;
+}

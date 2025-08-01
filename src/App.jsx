@@ -6,13 +6,17 @@ import { News } from "./Components/News/news";
 import { Slider } from "./Components/Slider/Slider";
 import { Footer } from "./Components/Footer/Footer";
 
+import { CityProvider } from "./Context/cityContext";
+
 function App() {
   return (
     <>
       <Header />
       <main>
-        <Hero></Hero>
-        <Weather></Weather>
+        <CityProvider>
+          <Hero></Hero>
+          <Weather></Weather>
+        </CityProvider>
         <News></News>
         <Slider></Slider>
       </main>
