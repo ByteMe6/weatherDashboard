@@ -1,6 +1,8 @@
+@use "../../scssUseful/vars" as *;
+
 header {
   margin: 0;
-  padding: 20px;
+  padding: $spacing-lg;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -27,14 +29,14 @@ header {
         bottom: -4px;
         width: 100%;
         height: 2px;
-        background: #ff9800;
+        background: $primary-color;
         opacity: 0;
         transform: scaleX(0);
         transition: opacity 0.2s, transform 0.2s;
       }
       &:hover {
         transform: translateY(-4px) scale(1.08);
-        color: #ff9800;
+        color: $primary-color;
         &::after {
           opacity: 1;
           transform: scaleX(1);
@@ -44,7 +46,7 @@ header {
   }
 
   .LogInHeaderItem {
-    margin: 0 5px;
+    margin: 0 $spacing-sm;
     transition: transform 0.2s;
     &:hover {
       transform: scale(1.1) rotate(-2deg);
@@ -54,7 +56,7 @@ header {
       max-height: 50px;
       transition: filter 0.3s, transform 0.3s;
       &:hover {
-        filter: brightness(1.2) drop-shadow(0 0 8px #ff9800);
+        filter: brightness(1.2) drop-shadow(0 0 8px $primary-color);
         transform: scale(1.15);
       }
     }
