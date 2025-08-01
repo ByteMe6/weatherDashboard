@@ -9,6 +9,8 @@ import { useAuth } from "./hooks/useAuth";
 import React, { useState } from "react";
 
 
+import { CityProvider } from "./Context/cityContext";
+
 function App() {
   const { user, loading, signInWithGoogle, logout } = useAuth();
   const [login, setLogin] = useState(false);
@@ -29,8 +31,10 @@ function App() {
         onLogout={logout}
       />
       <main>
-        <Hero></Hero>
-        <Weather></Weather>
+        <CityProvider>
+          <Hero></Hero>
+          <Weather></Weather>
+        </CityProvider>
         <News></News>
         <Slider></Slider>
       </main>
