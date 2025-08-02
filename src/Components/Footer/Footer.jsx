@@ -1,11 +1,12 @@
 import React from "react";
-import styles from "./Footer.module.scss";
 import cont from "../Container/Container.module.scss";
+import styles from "./Footer.module.scss";
 import { FaInstagram, FaWhatsappSquare } from "react-icons/fa";
 import { FaSquareFacebook } from "react-icons/fa6";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import { useEffect } from "react";
+import { Container } from "../Container/Container";
 
 export function Footer() {
   useEffect(() => {
@@ -14,9 +15,10 @@ export function Footer() {
 
   return (
     <footer
-      className={`${cont.container} ${styles.footer}`}
+      className={styles.footer}
       data-aos="fade-up"
     >
+      <div className={cont.container} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", gap: "30px"}}>
       <img src="./logo.png" alt="" data-aos="zoom-in" data-aos-delay="100" />
       <ul className={styles.footerItemList} data-aos="fade-right" data-aos-delay="200">
         <li className={styles.footerItemListItem}>
@@ -48,8 +50,9 @@ export function Footer() {
               <FaWhatsappSquare />
             </li>
           </ul>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
     </footer>
   );
 }
