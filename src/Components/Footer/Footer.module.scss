@@ -2,9 +2,9 @@
 @use "../../scssUseful/_vars.scss" as *;
 
 footer {
-    display: flex;
-    justify-content: flex-start;
-    gap: 30px;
+    // display: flex;
+    // justify-content: flex-start;
+    // gap: 30px;
     background-color: $footer-background-color;
     img{
         $img-size: 80px;
