@@ -1,0 +1,58 @@
+@use "../../scssUseful/_fonts.scss";
+@use "../../scssUseful/_vars.scss" as *;
+
+footer {
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+    background-color: $footer-background-color;
+    img{
+        $img-size: 80px;
+        width: $img-size;
+        height: $img-size;
+        transition: transform 0.3s ease;
+        &:hover {
+            transform: scale(1.08) rotate(-3deg);
+        }
+    }
+  .footerItemList .footerItemListItem h6 {
+    color: rgb(0, 0, 0);
+    font-family: Montserrat Alternates;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0%;
+    text-align: left;
+    transition: transform 0.3s;
+    &:hover {
+      // color убран по требованию
+      transform: translateY(-2px) scale(1.05);
+    }
+  }
+  .footerItemList .footerItemListItem p {
+    color: rgb(0, 0, 0);
+    font-family: Montserrat Alternates;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    letter-spacing: 0%;
+    text-align: left;
+    transition: transform 0.3s;
+    &:hover {
+      // color убран по требованию
+      transform: scale(1.03);
+    }
+  }
+  .footerItemList .footerItemListItem ul {
+    display: flex;
+    gap: 5px;
+  }
+  .footerItemList .footerItemListItem ul li {
+    font-size: 20px;
+    transition: transform 0.3s;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.2) rotate(-8deg);
+    }
+  }
+}
