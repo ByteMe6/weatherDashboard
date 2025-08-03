@@ -5,10 +5,12 @@
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
-  max-width: 1500px;
+  max-width: 1200px;
+  margin-top: 50px;
+  padding: 20px;
 }
 .titstyl {
-  font-size: 30px;
+  font-size: 20px;
   font-family: "Montserrat Alternates", sans-serif;
 }
 .slider {
@@ -31,13 +33,13 @@
   }
 
   &.left2 {
-    left: 27%;
+    left: 17%;
     transform: translateX(-50%) scale(0.6);
     z-index: 0;
   }
 
   &.left {
-    left: 38%;
+    left: 28%;
     transform: translateX(-50%) scale(0.8);
     z-index: 1;
   }
@@ -50,13 +52,13 @@
   }
 
   &.right {
-    left: 62%;
+    left: 72%;
     transform: translateX(-50%) scale(0.8);
     z-index: 1;
   }
 
   &.right2 {
-    left: 73%;
+    left: 83%;
     transform: translateX(-50%) scale(0.6);
     z-index: 0;
   }

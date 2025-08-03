@@ -1,0 +1,80 @@
+@use "../../scssUseful/_fonts.scss";
+.news-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 30px;
+    font-family: "Montserrat Alternates", sans-serif;
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .news-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; // главное!
+    overflow: hidden;
+    transition: transform 0.3s;
+    background: #fff;
+    border-radius: 10px;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+    }
+
+    h3 {
+      padding: 15px;
+      margin: 0;
+      font-size: 1.1rem;
+      flex-grow: 1;
+    }
+
+    p {
+      padding: 0 15px 15px;
+      color: #666;
+    }
+  }
+
+  .news-navigation {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .nav-button {
+    width: 138px;
+    height: 40px;
+    background-color: #ffb36c;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.5s;
+
+    &:hover {
+      background-color: #000000;
+      color: #ffb36c;
+    }
+
+    &:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+  }
+}
