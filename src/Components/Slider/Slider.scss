@@ -1,0 +1,67 @@
+@use "../../scssUseful/_fonts.scss";
+
+.slider-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  max-width: 1500px;
+}
+.titstyl {
+  font-size: 30px;
+  font-family: "Montserrat Alternates", sans-serif;
+}
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  position: relative;
+}
+.slider-image {
+  position: absolute;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  filter: brightness(0.7);
+
+  img {
+    height: 250px;
+    transition: all 0.5s ease;
+    border-radius: 8px;
+  }
+
+  &.left2 {
+    left: 27%;
+    transform: translateX(-50%) scale(0.6);
+    z-index: 0;
+  }
+
+  &.left {
+    left: 38%;
+    transform: translateX(-50%) scale(0.8);
+    z-index: 1;
+  }
+
+  &.center {
+    left: 50%;
+    transform: translateX(-50%) scale(1);
+    z-index: 2;
+    filter: brightness(1);
+  }
+
+  &.right {
+    left: 62%;
+    transform: translateX(-50%) scale(0.8);
+    z-index: 1;
+  }
+
+  &.right2 {
+    left: 73%;
+    transform: translateX(-50%) scale(0.6);
+    z-index: 0;
+  }
+
+  &.hidden {
+    display: none;
+  }
+}
