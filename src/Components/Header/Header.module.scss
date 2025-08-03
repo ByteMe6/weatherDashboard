@@ -4,14 +4,14 @@ header {
   margin: 0;
   padding: $spacing-lg;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-around;
 
   .links,
   .logInHeader,
   .nav {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     animation: fadeInUp 0.8s ease-in;
   }
 

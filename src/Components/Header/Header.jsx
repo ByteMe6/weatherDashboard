@@ -2,11 +2,23 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import style from "./Header.module.scss";
 import cont from "../Container/Container.module.scss";
+import style from "./Header.module.scss";
 
-export function Header({ user, login, onLogin, onLogout }) {
+import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import app from "./firebase";
+
+export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRegister }) {
   const [showUserModal, setShowUserModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const auth = getAuth(app);
 
   useEffect(() => {
     AOS.init({ duration: 500, once: true });
@@ -14,6 +26,98 @@ export function Header({ user, login, onLogin, onLogout }) {
 
   const handleOpenUserModal = () => setShowUserModal(true);
   const handleCloseUserModal = () => setShowUserModal(false);
+
+  const handleOpenLoginModal = () => {
+    setShowLoginModal(true);
+    setIsRegister(false);
+  };
+  const handleCloseLoginModal = () => {
+    setShowLoginModal(false);
+    setEmail("");
+    setPassword("");
+    setDisplayName("");
+    setEmailError("");
+    setLoading(false);
+    setIsRegister(false);
+  };
+
+
+  const handleGoogleAuth = async () => {
+    setLoading(true);
+    setEmailError("");
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      setShowLoginModal(false);
+    } catch (err) {
+      setEmailError("Google authentication error: " + (err.message || "Please try again"));
+    }
+    setLoading(false);
+  };
+
+
+  const handleEmailLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setEmailError("");
+    if (!email || !password) {
+      setEmailError("Please fill in all fields");
+      setLoading(false);
+      return;
+    }
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setShowLoginModal(false);
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      let msg = "Sign in error: ";
+      if (err.code === "auth/user-not-found") msg += "User not found";
+      else if (err.code === "auth/wrong-password") msg += "Incorrect password";
+      else msg += err.message || "Please try again";
+      setEmailError(msg);
+    }
+    setLoading(false);
+  };
+
+
+  const handleEmailRegister = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setEmailError("");
+    if (!email || !password || !displayName) {
+      setEmailError("Please fill in all fields");
+      setLoading(false);
+      return;
+    }
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, { displayName });
+      setShowLoginModal(false);
+      setEmail("");
+      setPassword("");
+      setDisplayName("");
+    } catch (err) {
+      let msg = "Registration error: ";
+      if (err.code === "auth/email-already-in-use") msg += "Email already in use";
+      else if (err.code === "auth/weak-password") msg += "Weak password (minimum 6 characters)";
+      else msg += err.message || "Please try again";
+      setEmailError(msg);
+    }
+    setLoading(false);
+  };
+
+
+  const handleLogout = async () => {
+    setLoading(true);
+    try {
+      await signOut(auth);
+      if (onLogout) onLogout();
+    } catch (err) {
+
+    }
+    setLoading(false);
+  };
 
   return (
     <header className={cont.container}>
@@ -44,14 +148,19 @@ export function Header({ user, login, onLogin, onLogout }) {
         </ul>
       </nav>
       <ul className={style.logInHeader}>
-        {!login ? (
+        {!auth.currentUser ? (
           <li
             className={style.LogInHeaderItem}
             data-aos="fade-left"
             data-aos-delay="500"
           >
-            <button type="button" className="btn btn-warning" onClick={onLogin}>
-              Log in with Google
+            <button
+              type="button"
+              className="btn btn-warning"
+              style={{}}
+              onClick={handleOpenLoginModal}
+            >
+              Sign In
             </button>
           </li>
         ) : (
@@ -64,9 +173,10 @@ export function Header({ user, login, onLogin, onLogout }) {
               <button
                 type="button"
                 className="btn btn-warning me-2"
-                onClick={onLogout}
+                onClick={handleLogout}
+                disabled={loading}
               >
-                Log out
+                Sign Out
               </button>
             </li>
             <li
@@ -85,7 +195,147 @@ export function Header({ user, login, onLogin, onLogout }) {
           </>
         )}
       </ul>
-        {/* modal */}
+
+      {showLoginModal && (
+        <div
+          className="modal show"
+          style={{
+            display: "block",
+            backgroundColor: "rgba(0,0,0,0.5)",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            zIndex: 1050,
+          }}
+          tabIndex="-1"
+        >
+          <div
+            className="modal-dialog modal-dialog-centered"
+            style={{ maxWidth: 400, margin: "auto" }}
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">{isRegister ? "Registration" : "Sign In"}</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={handleCloseLoginModal}
+                ></button>
+              </div>
+              <div className="modal-body text-center">
+                <button
+                  type="button"
+                  className="btn btn-warning mb-3 d-flex align-items-center justify-content-center"
+                  style={{ width: "100%", gap: "8px" }}
+                  onClick={handleGoogleAuth}
+                  disabled={loading}
+                >
+                  <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                    <g fill="none" fillRule="evenodd">
+                      <path d="M17.64 9.205c0-.639-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+                      <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+                      <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+                      <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+                    </g>
+                  </svg>
+                  {isRegister ? "Sign up with Google" : "Sign in with Google"}
+                </button>
+                <div className="mb-2" style={{ fontWeight: 500 }}>or</div>
+                <form onSubmit={isRegister ? handleEmailRegister : handleEmailLogin}>
+                  {isRegister && (
+                    <div className="mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Name"
+                        value={displayName}
+                        onChange={e => setDisplayName(e.target.value)}
+                        disabled={loading}
+                        autoComplete="name"
+                      />
+                    </div>
+                  )}
+                  <div className="mb-3">
+                    <input
+                      type="email"
+                      className="form-control"
+                      placeholder="Email"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      disabled={loading}
+                      autoComplete="username"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="Password"
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                      disabled={loading}
+                      autoComplete={isRegister ? "new-password" : "current-password"}
+                    />
+                  </div>
+                  {emailError && (
+                    <div className="alert alert-danger py-1" style={{ fontSize: 14 }}>
+                      {emailError}
+                    </div>
+                  )}
+                  <button
+                    type="submit"
+                    className="btn btn-secondary"
+                    style={{ width: "100%" }}
+                    disabled={loading}
+                  >
+                    {loading
+                      ? (isRegister ? "Signing up..." : "Signing in...")
+                      : (isRegister ? "Sign up" : "Sign in with Email")}
+                  </button>
+                </form>
+                <div className="mt-3">
+                  {isRegister ? (
+                    <span>
+                      Already have an account?{" "}
+                      <button
+                        type="button"
+                        className="btn btn-link p-0"
+                        style={{ fontSize: 15 }}
+                        onClick={() => {
+                          setIsRegister(false);
+                          setEmailError("");
+                        }}
+                        disabled={loading}
+                      >
+                        Sign In
+                      </button>
+                    </span>
+                  ) : (
+                    <span>
+                      No account?{" "}
+                      <button
+                        type="button"
+                        className="btn btn-link p-0"
+                        style={{ fontSize: 15 }}
+                        onClick={() => {
+                          setIsRegister(true);
+                          setEmailError("");
+                        }}
+                        disabled={loading}
+                      >
+                        Sign Up
+                      </button>
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {showUserModal && (
         <div
           className="modal show"
@@ -107,7 +357,7 @@ export function Header({ user, login, onLogin, onLogout }) {
           >
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">User info</h5>
+                <h5 className="modal-title">User Information</h5>
                 <button
                   type="button"
                   className="btn-close"
@@ -116,34 +366,15 @@ export function Header({ user, login, onLogin, onLogout }) {
                 ></button>
               </div>
               <div className="modal-body text-center">
-                {/* <img
-                  src={user && user.photoURL ? user.photoURL : "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/user.png"}
-                  alt="User Avatar"
-                  style={{
-                    width: "64px",
-                    height: "64px",
-                    borderRadius: "50%",
-                    marginBottom: "10px",
-                  }}
-                /> */}
-                <div>
+                <div className="mb-2">
                   <strong>Name:</strong>{" "}
-                  {user && user.displayName ? user.displayName : "No info"}
+                  {auth.currentUser && auth.currentUser.displayName ? auth.currentUser.displayName : "No information"}
                 </div>
                 <div>
                   <strong>Email:</strong>{" "}
-                  {user && user.email ? user.email : "No info"}
+                  {auth.currentUser && auth.currentUser.email ? auth.currentUser.email : "No information"}
                 </div>
               </div>
-              {/* <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCloseUserModal}
-                >
-                  Close
-                </button>
-              </div> */}
             </div>
           </div>
         </div>
