@@ -22,6 +22,23 @@ npm run deploy
 
 Сайт доступен по адресу: **https://bytime6.github.io/weatherDashboard/**
 
+## 🔧 Настройка Firebase
+
+### Для локальной разработки:
+1. Скопируйте `firebase-config.example` в `.env`
+2. Замените значения на ваши реальные Firebase конфигурации
+
+### Для GitHub Pages:
+1. Перейдите в Settings → Secrets and variables → Actions
+2. Добавьте следующие secrets:
+   - `FIREBASE_API_KEY`
+   - `FIREBASE_AUTH_DOMAIN`
+   - `FIREBASE_PROJECT_ID`
+   - `FIREBASE_STORAGE_BUCKET`
+   - `FIREBASE_MESSAGING_SENDER_ID`
+   - `FIREBASE_APP_ID`
+   - `FIREBASE_MEASUREMENT_ID`
+
 ## 🛠 Технологии
 
 - React 19
