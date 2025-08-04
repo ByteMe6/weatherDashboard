@@ -170,7 +170,7 @@ export function Header({ onLogout }) {
             data-aos="fade-up"
             data-aos-delay="200"
           >
-            Who we are
+            Who we are1
           </li>
           <li
             className={style.linkListItem}
