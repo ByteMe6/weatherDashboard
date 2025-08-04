@@ -75,6 +75,14 @@ export function Header({ onLogout }) {
   const handleGoogleAuth = async () => {
     setLoading(true);
     setEmailError("");
+    
+    // Проверяем, настроен ли Firebase
+    if (!auth || auth.currentUser === null && auth.name === 'mock-app') {
+      setEmailError("Firebase is not configured. Please check your environment variables.");
+      setLoading(false);
+      return;
+    }
+    
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
@@ -90,6 +98,14 @@ export function Header({ onLogout }) {
     e.preventDefault();
     setLoading(true);
     setEmailError("");
+    
+    // Проверяем, настроен ли Firebase
+    if (!auth || auth.currentUser === null && auth.name === 'mock-app') {
+      setEmailError("Firebase is not configured. Please check your environment variables.");
+      setLoading(false);
+      return;
+    }
+    
     if (!email || !password) {
       setEmailError("Please fill in all fields");
       setLoading(false);
@@ -115,6 +131,14 @@ export function Header({ onLogout }) {
     e.preventDefault();
     setLoading(true);
     setEmailError("");
+    
+    // Проверяем, настроен ли Firebase
+    if (!auth || auth.currentUser === null && auth.name === 'mock-app') {
+      setEmailError("Firebase is not configured. Please check your environment variables.");
+      setLoading(false);
+      return;
+    }
+    
     if (!email || !password || !displayName) {
       setEmailError("Please fill in all fields");
       setLoading(false);
