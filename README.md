@@ -1,12 +1,69 @@
-# React + Vite
+# Weather Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Интерактивная панель погоды, созданная с использованием React и Vite.
 
-Currently, two official plugins are available:
+## Технологии
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 19
+- Vite
+- SCSS
+- Firebase
+- Bootstrap
+- React Icons
 
-## Expanding the ESLint configuration
+## Разработка
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Установка зависимостей
+npm install
+
+# Запуск в режиме разработки
+npm run dev
+
+# Сборка для продакшена
+npm run build
+
+# Предварительный просмотр сборки
+npm run preview
+```
+
+## Деплой на GitHub Pages
+
+### Автоматический деплой (рекомендуется)
+
+1. Убедитесь, что ваш репозиторий подключен к GitHub
+2. Перейдите в настройки репозитория на GitHub
+3. В разделе "Pages" выберите источник "GitHub Actions"
+4. При каждом пуше в ветку `main` будет автоматически запускаться сборка и деплой
+
+### Ручной деплой
+
+```bash
+# Сборка и деплой
+npm run deploy
+```
+
+## Структура проекта
+
+```
+src/
+├── Components/          # React компоненты
+│   ├── Container/      # Контейнер приложения
+│   ├── Footer/         # Подвал
+│   ├── Header/         # Заголовок с авторизацией
+│   ├── Hero/           # Главная секция
+│   ├── News/           # Новости
+│   ├── Slider/         # Слайдер
+│   └── Weather/        # Компоненты погоды
+├── Context/            # React контексты
+├── hooks/              # Пользовательские хуки
+└── images/             # Изображения и видео
+```
+
+## Особенности
+
+- Адаптивный дизайн
+- Интеграция с Firebase для авторизации
+- Анимированные погодные эффекты
+- Прогноз погоды на неделю
+- Детальная информация о погодных условиях
