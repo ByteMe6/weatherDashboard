@@ -1,18 +1,23 @@
 @use "../../scssUseful/vars" as *;
+@use "sass:color";
 
 header {
   margin: 0;
   padding: $spacing-lg;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: space-between;
 
   .links,
   .logInHeader,
   .nav {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     animation: fadeInUp 0.8s ease-in;
+  }
+
+  .logInHeader {
+    display: flex;
   }
 
   .links {
@@ -60,5 +65,288 @@ header {
         transform: scale(1.15);
       }
     }
+  }
+
+  .burgerMenu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+
+    .burgerLine {
+      width: 100%;
+      height: 3px;
+      background: black;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+
+    &.active {
+      .burgerLine {
+        &:nth-child(1) {
+          transform: rotate(45deg) translate(6px, 6px);
+        }
+        &:nth-child(2) {
+          opacity: 0;
+        }
+        &:nth-child(3) {
+          transform: rotate(-45deg) translate(6px, -6px);
+        }
+      }
+    }
+  }
+
+  .mobileMenu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: white;
+    z-index: 1000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-lg;
+    animation: slideIn 0.3s ease-out;
+
+    .closeButton {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 32px;
+      color: black;
+      cursor: pointer;
+      padding: 10px;
+      transition: color 0.3s ease;
+      
+      &:hover {
+        color: $primary-color;
+      }
+    }
+
+    .mobileLinks {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-lg;
+
+      .mobileLink {
+        color: black;
+        font-size: 24px;
+        text-decoration: none;
+        transition: color 0.3s, transform 0.3s;
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -8px;
+          left: 50%;
+          width: 0;
+          height: 2px;
+          background: $primary-color;
+          transition: all 0.3s ease;
+          transform: translateX(-50%);
+        }
+
+        &:hover {
+          color: $primary-color;
+          transform: scale(1.1);
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .mobileAuth {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-md;
+      align-items: center;
+
+      .mobileBtn {
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+
+        &.primary {
+          background: $primary-color;
+          color: white;
+          &:hover {
+            background: color.adjust($primary-color, $lightness: -10%);
+            transform: scale(1.05);
+          }
+        }
+
+        &.secondary {
+          background: transparent;
+          color: black;
+          border: 2px solid $primary-color;
+          &:hover {
+            background: $primary-color;
+            color: white;
+            transform: scale(1.05);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  header {
+    padding: $spacing-md;
+    
+    .links {
+      & > * {
+        margin-right: 24px;
+        font-size: 14px;
+      }
+    }
+    
+    .LogInHeaderItem {
+      margin: 0 $spacing-xs;
+      
+      img {
+        max-width: 40px;
+        max-height: 40px;
+      }
+    }
+
+    .burgerMenu {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: $spacing-sm;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+      .nav {
+    flex-direction: row;
+    align-items: center;
+    gap: $spacing-lg;
+    
+    img {
+      max-width: 120px;
+      margin-bottom: 0;
+    }
+  }
+    
+    .links {
+      display: none;
+    }
+    
+    .logInHeader {
+      display: none;
+    }
+
+    .burgerMenu {
+      display: flex;
+    }
+
+    .mobileMenu {
+      &.active {
+        display: flex;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: $spacing-xs;
+    
+    .nav {
+      img {
+        max-width: 100px;
+      }
+    }
+    
+    .links {
+      & > * {
+        font-size: 12px;
+        padding: 6px 10px;
+      }
+    }
+    
+    .LogInHeaderItem {
+      .btn {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+      
+      img {
+        max-width: 30px;
+        max-height: 30px;
+      }
+    }
+
+    .burgerMenu {
+      width: 25px;
+      height: 20px;
+
+      .burgerLine {
+        height: 2px;
+      }
+
+      &.active {
+        .burgerLine {
+          &:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+          }
+          &:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+          }
+        }
+      }
+    }
+
+    .mobileMenu {
+      .mobileLinks {
+        .mobileLink {
+          font-size: 20px;
+        }
+      }
+
+      .mobileAuth {
+        .mobileBtn {
+          padding: 10px 20px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    flex-direction: row;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

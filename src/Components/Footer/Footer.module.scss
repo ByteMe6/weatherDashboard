@@ -2,10 +2,20 @@
 @use "../../scssUseful/_vars.scss" as *;
 
 footer {
-    // display: flex;
-    // justify-content: flex-start;
-    // gap: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    justify-content: flex-start;
+    gap: 30px;
     background-color: $footer-background-color;
+    
+    .footerContent {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 30px;
+    }
+    
     img{
         $img-size: 80px;
         width: $img-size;
@@ -14,45 +24,114 @@ footer {
         &:hover {
             transform: scale(1.08) rotate(-3deg);
         }
+        
+        @media (max-width: 768px) {
+            width: 60px;
+            height: 60px;
+        }
+        
+        @media (max-width: 480px) {
+            width: 50px;
+            height: 50px;
+        }
     }
-  .footerItemList .footerItemListItem h6 {
-    color: rgb(0, 0, 0);
-    font-family: Montserrat Alternates;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 20px;
-    letter-spacing: 0%;
-    text-align: left;
-    transition: transform 0.3s;
-    &:hover {
-      // color убран по требованию
-      transform: translateY(-2px) scale(1.05);
+    
+    .footerItemList .footerItemListItem h6 {
+        color: rgb(0, 0, 0);
+        font-family: Montserrat Alternates;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 20px;
+        letter-spacing: 0%;
+        text-align: left;
+        transition: transform 0.3s;
+        &:hover {
+            transform: translateY(-2px) scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 12px;
+        }
     }
-  }
-  .footerItemList .footerItemListItem p {
-    color: rgb(0, 0, 0);
-    font-family: Montserrat Alternates;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 15px;
-    letter-spacing: 0%;
-    text-align: left;
-    transition: transform 0.3s;
-    &:hover {
-      // color убран по требованию
-      transform: scale(1.03);
+    
+    .footerItemList .footerItemListItem p {
+        color: rgb(0, 0, 0);
+        font-family: Montserrat Alternates;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 15px;
+        letter-spacing: 0%;
+        text-align: left;
+        transition: transform 0.3s;
+        &:hover {
+            transform: scale(1.03);
+        }
+        
+        @media (max-width: 768px) {
+            text-align: center;
+            font-size: 11px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 10px;
+            line-height: 12px;
+        }
     }
-  }
-  .footerItemList .footerItemListItem ul {
-    display: flex;
-    gap: 5px;
-  }
-  .footerItemList .footerItemListItem ul li {
-    font-size: 20px;
-    transition: transform 0.3s;
-    cursor: pointer;
-    &:hover {
-      transform: scale(1.2) rotate(-8deg);
+    
+    .footerItemList .footerItemListItem ul {
+        display: flex;
+        gap: 5px;
+        
+        @media (max-width: 768px) {
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        @media (max-width: 480px) {
+            gap: 8px;
+        }
     }
-  }
+    
+    .footerItemList .footerItemListItem ul li {
+        font-size: 20px;
+        transition: transform 0.3s;
+        cursor: pointer;
+        &:hover {
+            transform: scale(1.2) rotate(-8deg);
+        }
+        
+        @media (max-width: 768px) {
+            font-size: 18px;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 16px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        text-align: center;
+        
+        .footerContent {
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        gap: 15px;
+        
+        .footerContent {
+            gap: 15px;
+        }
+    }
 }

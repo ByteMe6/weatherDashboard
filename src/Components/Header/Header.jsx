@@ -17,6 +17,7 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
   const [displayName, setDisplayName] = useState("");
   const [emailError, setEmailError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const auth = getAuth(app);
 
@@ -24,12 +25,41 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
     AOS.init({ duration: 500, once: true });
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMobileMenuOpen && !event.target.closest(`.${style.mobileMenu}`) && !event.target.closest(`.${style.burgerMenu}`)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('click', handleClickOutside);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
   const handleOpenUserModal = () => setShowUserModal(true);
   const handleCloseUserModal = () => setShowUserModal(false);
 
   const handleOpenLoginModal = () => {
     setShowLoginModal(true);
     setIsRegister(false);
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleToggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleCloseMobileMenu = () => {
+    setIsMobileMenuOpen(false);
   };
   const handleCloseLoginModal = () => {
     setShowLoginModal(false);
@@ -113,6 +143,7 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
     try {
       await signOut(auth);
       if (onLogout) onLogout();
+      setIsMobileMenuOpen(false);
     } catch (err) {
 
     }
@@ -121,6 +152,16 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
 
   return (
     <header className={cont.container}>
+      <button 
+        className={`${style.burgerMenu} ${isMobileMenuOpen ? style.active : ''}`}
+        onClick={handleToggleMobileMenu}
+        aria-label="Toggle mobile menu"
+      >
+        <div className={style.burgerLine}></div>
+        <div className={style.burgerLine}></div>
+        <div className={style.burgerLine}></div>
+      </button>
+
       <nav className={style.nav} data-aos="fade-down">
         <img src="./logo.png" alt="" data-aos="zoom-in" data-aos-delay="100" />
         <ul className={style.links}>
@@ -157,7 +198,10 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
             <button
               type="button"
               className="btn btn-warning"
-              style={{}}
+              style={{
+                fontSize: window.innerWidth <= 480 ? "12px" : window.innerWidth <= 768 ? "14px" : "16px",
+                padding: window.innerWidth <= 480 ? "6px 12px" : window.innerWidth <= 768 ? "8px 16px" : "10px 20px"
+              }}
               onClick={handleOpenLoginModal}
             >
               Sign In
@@ -173,6 +217,10 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
               <button
                 type="button"
                 className="btn btn-warning me-2"
+                style={{
+                  fontSize: window.innerWidth <= 480 ? "12px" : window.innerWidth <= 768 ? "14px" : "16px",
+                  padding: window.innerWidth <= 480 ? "6px 12px" : window.innerWidth <= 768 ? "8px 16px" : "10px 20px"
+                }}
                 onClick={handleLogout}
                 disabled={loading}
               >
@@ -188,7 +236,11 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
                 <img
                   src="./user.png"
                   alt="User Avatar"
-                  style={{ width: "32px", height: "32px", borderRadius: "50%" }}
+                  style={{ 
+                    width: window.innerWidth <= 480 ? "28px" : window.innerWidth <= 768 ? "30px" : "32px", 
+                    height: window.innerWidth <= 480 ? "28px" : window.innerWidth <= 768 ? "30px" : "32px", 
+                    borderRadius: "50%" 
+                  }}
                 />
               </button>
             </li>
@@ -213,7 +265,11 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
         >
           <div
             className="modal-dialog modal-dialog-centered"
-            style={{ maxWidth: 400, margin: "auto" }}
+            style={{ 
+              maxWidth: window.innerWidth <= 480 ? "95%" : window.innerWidth <= 768 ? "90%" : 400, 
+              margin: "auto",
+              padding: "0 10px"
+            }}
           >
             <div className="modal-content">
               <div className="modal-header">
@@ -229,7 +285,12 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
                 <button
                   type="button"
                   className="btn btn-warning mb-3 d-flex align-items-center justify-content-center"
-                  style={{ width: "100%", gap: "8px" }}
+                  style={{ 
+                    width: "100%", 
+                    gap: "8px",
+                    fontSize: window.innerWidth <= 480 ? "14px" : "16px",
+                    padding: window.innerWidth <= 480 ? "8px 12px" : "12px 16px"
+                  }}
                   onClick={handleGoogleAuth}
                   disabled={loading}
                 >
@@ -281,14 +342,21 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
                     />
                   </div>
                   {emailError && (
-                    <div className="alert alert-danger py-1" style={{ fontSize: 14 }}>
+                    <div className="alert alert-danger py-1" style={{ 
+                      fontSize: window.innerWidth <= 480 ? "12px" : "14px",
+                      padding: window.innerWidth <= 480 ? "6px 8px" : "8px 12px"
+                    }}>
                       {emailError}
                     </div>
                   )}
                   <button
                     type="submit"
                     className="btn btn-secondary"
-                    style={{ width: "100%" }}
+                    style={{ 
+                      width: "100%",
+                      fontSize: window.innerWidth <= 480 ? "14px" : "16px",
+                      padding: window.innerWidth <= 480 ? "8px 12px" : "12px 16px"
+                    }}
                     disabled={loading}
                   >
                     {loading
@@ -300,16 +368,18 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
                   {isRegister ? (
                     <span>
                       Already have an account?{" "}
-                      <button
-                        type="button"
-                        className="btn btn-link p-0"
-                        style={{ fontSize: 15 }}
-                        onClick={() => {
-                          setIsRegister(false);
-                          setEmailError("");
-                        }}
-                        disabled={loading}
-                      >
+                                              <button
+                          type="button"
+                          className="btn btn-link p-0"
+                          style={{ 
+                            fontSize: window.innerWidth <= 480 ? "13px" : "15px"
+                          }}
+                          onClick={() => {
+                            setIsRegister(false);
+                            setEmailError("");
+                          }}
+                          disabled={loading}
+                        >
                         Sign In
                       </button>
                     </span>
@@ -319,7 +389,9 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
                       <button
                         type="button"
                         className="btn btn-link p-0"
-                        style={{ fontSize: 15 }}
+                        style={{ 
+                          fontSize: window.innerWidth <= 480 ? "13px" : "15px"
+                        }}
                         onClick={() => {
                           setIsRegister(true);
                           setEmailError("");
@@ -353,7 +425,11 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
         >
           <div
             className="modal-dialog modal-dialog-centered"
-            style={{ maxWidth: 400, margin: "auto" }}
+            style={{ 
+              maxWidth: window.innerWidth <= 480 ? "95%" : window.innerWidth <= 768 ? "90%" : 400, 
+              margin: "auto",
+              padding: "0 10px"
+            }}
           >
             <div className="modal-content">
               <div className="modal-header">
@@ -376,6 +452,57 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {isMobileMenuOpen && (
+        <div className={`${style.mobileMenu} ${isMobileMenuOpen ? style.active : ''}`}>
+          <button 
+            className={style.closeButton}
+            onClick={handleCloseMobileMenu}
+            aria-label="Close mobile menu"
+          >
+            ✕
+          </button>
+          
+          <div className={style.mobileLinks}>
+            <a href="#" className={style.mobileLink} onClick={handleCloseMobileMenu}>
+              Who we are
+            </a>
+            <a href="#" className={style.mobileLink} onClick={handleCloseMobileMenu}>
+              Contacts
+            </a>
+            <a href="#" className={style.mobileLink} onClick={handleCloseMobileMenu}>
+              Menu
+            </a>
+          </div>
+          
+          <div className={style.mobileAuth}>
+            {!auth.currentUser ? (
+              <button
+                className="btn btn-warning"
+                onClick={handleOpenLoginModal}
+              >
+                Sign In
+              </button>
+            ) : (
+              <>
+                <button
+                  className="btn btn-outline-warning"
+                  onClick={handleLogout}
+                  disabled={loading}
+                >
+                  Sign Out
+                </button>
+                <button
+                  className="btn btn-warning"
+                  onClick={handleOpenUserModal}
+                >
+                  Account
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}

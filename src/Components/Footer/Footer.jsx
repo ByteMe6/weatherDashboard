@@ -22,6 +22,7 @@ export function Footer() {
           justifyContent: "flex-start",
           alignItems: "center",
           gap: "30px",
+          flexWrap: "wrap",
         }}
       >
         <img src="./logo.png" alt="" data-aos="zoom-in" data-aos-delay="100" />
