@@ -8,7 +8,7 @@ import style from "./Header.module.scss";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import app from "./firebase";
 
-export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRegister }) {
+export function Header({ onLogout }) {
   const [showUserModal, setShowUserModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
@@ -145,7 +145,7 @@ export function Header({ user, login, onLogin, onLogout, onEmailLogin, onEmailRe
       if (onLogout) onLogout();
       setIsMobileMenuOpen(false);
     } catch (err) {
-
+      console.error('Logout error:', err);
     }
     setLoading(false);
   };
