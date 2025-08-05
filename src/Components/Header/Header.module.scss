@@ -360,3 +360,27 @@ header {
   opacity: $header-opacity;
   z-index: $z-header;
 }
+
+.timeDiv {
+  display: flex;
+  align-items: flex-end;
+  // margin-top: 16px;
+  margin: 0 30px;
+  text-align: center;
+  color: #3c3c3c;
+  font-size: 20px;
+
+  @media (max-width: 720px) {
+    font-size: 24px;
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 720px) {
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+}

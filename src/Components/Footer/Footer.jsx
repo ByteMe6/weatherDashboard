@@ -3,18 +3,11 @@ import cont from "../Container/Container.module.scss";
 import styles from "./Footer.module.scss";
 import { FaInstagram, FaWhatsappSquare } from "react-icons/fa";
 import { FaSquareFacebook } from "react-icons/fa6";
-import "aos/dist/aos.css";
-import AOS from "aos";
-import { useEffect } from "react";
 import { Container } from "../Container/Container";
 
 export function Footer() {
-  useEffect(() => {
-    AOS.init({ duration: 800 });
-  }, []);
-
   return (
-    <footer className={styles.footer} data-aos="fade-up">
+    <footer className={styles.footer}>
       <div
         className={cont.container}
         style={{
@@ -25,12 +18,8 @@ export function Footer() {
           flexWrap: "wrap",
         }}
       >
-        <img src="./logo.png" alt="" data-aos="zoom-in" data-aos-delay="100" />
-        <ul
-          className={styles.footerItemList}
-          data-aos="fade-right"
-          data-aos-delay="200"
-        >
+        <img src="./logo.png" alt="" />
+        <ul className={styles.footerItemList}>
           <li className={styles.footerItemListItem}>
             <h6>Adress</h6>
           </li>
@@ -44,11 +33,7 @@ export function Footer() {
           </li>
         </ul>
 
-        <ul
-          className={styles.footerItemList}
-          data-aos="fade-left"
-          data-aos-delay="300"
-        >
+        <ul className={styles.footerItemList}>
           <li className={styles.footerItemListItem}>
             <h6>Contact us</h6>
           </li>
