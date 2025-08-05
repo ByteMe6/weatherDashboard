@@ -350,3 +350,13 @@ header {
     transform: translateY(0);
   }
 }
+
+
+header {
+  position: fixed;
+  background-color: $header-bg;
+  width: 100%;
+  top: 0;
+  opacity: $header-opacity;
+  z-index: $z-header;
+}
