@@ -54,13 +54,13 @@ export function Footer() {
           </li>
           <li className={styles.footerItemListItem}>
             <ul>
-              <li data-aos="zoom-in" data-aos-delay="400">
+              <li>
                 <FaInstagram />
               </li>
-              <li data-aos="zoom-in" data-aos-delay="500">
+              <li>
                 <FaSquareFacebook />
               </li>
-              <li data-aos="zoom-in" data-aos-delay="600">
+              <li>
                 <FaWhatsappSquare />
               </li>
             </ul>
