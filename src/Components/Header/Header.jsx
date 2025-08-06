@@ -93,6 +93,7 @@ export function Header({ onLogout }) {
   const handleCloseMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
+
   const handleCloseLoginModal = () => {
     setShowLoginModal(false);
     setEmail("");
@@ -107,7 +108,6 @@ export function Header({ onLogout }) {
     setLoading(true);
     setEmailError("");
 
-    // Проверяем, настроен ли Firebase
     if (!auth || (auth.currentUser === null && auth.name === "mock-app")) {
       setEmailError(
         "Firebase is not configured. Please check your environment variables."
@@ -133,7 +133,6 @@ export function Header({ onLogout }) {
     setLoading(true);
     setEmailError("");
 
-    // Проверяем, настроен ли Firebase
     if (!auth || (auth.currentUser === null && auth.name === "mock-app")) {
       setEmailError(
         "Firebase is not configured. Please check your environment variables."
@@ -167,7 +166,6 @@ export function Header({ onLogout }) {
     setLoading(true);
     setEmailError("");
 
-    // Проверяем, настроен ли Firebase
     if (!auth || (auth.currentUser === null && auth.name === "mock-app")) {
       setEmailError(
         "Firebase is not configured. Please check your environment variables."
@@ -217,86 +215,59 @@ export function Header({ onLogout }) {
   };
 
   return (
-    <header className={cont.container}>
-      <nav className={style.nav} data-aos="fade-down" style={{ display: "flex", alignItems: "center" }}>
-        <img src="./logo.png" alt="" data-aos="zoom-in" data-aos-delay="100" />
-        <div className={style.timeDiv}>
-          {`${currentTime}`}
-        </div>
-        <button
-          className={`${style.burgerMenu} ${
-            isMobileMenuOpen ? style.active : ""
-          }`}
-          onClick={handleToggleMobileMenu}
-          aria-label="Toggle mobile menu"
-        >
-          <div className={style.burgerLine}></div>
-          <div className={style.burgerLine}></div>
-          <div className={style.burgerLine}></div>
-        </button>
-        <ul className={style.links}>
-          <li
-            className={style.linkListItem}
-            data-aos="fade-up"
-            data-aos-delay="200"
+    <header className={style.header}>
+      <div className={`${cont.container} ${style.containerHead}`}>
+        <nav className={style.nav} data-aos="fade-down" style={{ display: "flex", alignItems: "center" }}>
+          <img src="./logo.png" alt="" data-aos="zoom-in" data-aos-delay="100" />
+          <div className={style.timeDiv}>
+            {`${currentTime}`}
+          </div>
+          <button
+            className={`${style.burgerMenu} ${
+              isMobileMenuOpen ? style.active : ""
+            }`}
+            onClick={handleToggleMobileMenu}
+            aria-label="Toggle mobile menu"
           >
-            Who we are3
-          </li>
-          <li
-            className={style.linkListItem}
-            data-aos="fade-up"
-            data-aos-delay="300"
-          >
-            Contacts
-          </li>
-          <li
-            className={style.linkListItem}
-            data-aos="fade-up"
-            data-aos-delay="400"
-          >
-            Menu
-          </li>
-        </ul>
-      </nav>
-      <ul className={style.logInHeader}>
-        {!auth.currentUser ? (
-          <li
-            className={style.LogInHeaderItem}
-            data-aos="fade-left"
-            data-aos-delay="500"
-          >
-            <button
-              type="button"
-              className="btn btn-warning"
-              style={{
-                fontSize:
-                  window.innerWidth <= 480
-                    ? "12px"
-                    : window.innerWidth <= 768
-                    ? "14px"
-                    : "16px",
-                padding:
-                  window.innerWidth <= 480
-                    ? "6px 12px"
-                    : window.innerWidth <= 768
-                    ? "8px 16px"
-                    : "10px 20px",
-              }}
-              onClick={handleOpenLoginModal}
+            <div className={style.burgerLine}></div>
+            <div className={style.burgerLine}></div>
+            <div className={style.burgerLine}></div>
+          </button>
+          <ul className={style.links}>
+            <li
+              className={style.linkListItem}
+              data-aos="fade-up"
+              data-aos-delay="200"
             >
-              Sign In
-            </button>
-          </li>
-        ) : (
-          <>
+              Who we are3
+            </li>
+            <li
+              className={style.linkListItem}
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
+              Contacts
+            </li>
+            <li
+              className={style.linkListItem}
+              data-aos="fade-up"
+              data-aos-delay="400"
+            >
+              Menu
+            </li>
+          </ul>
+        </nav>
+        
+        <ul className={style.logInHeader}>
+          {!auth.currentUser ? (
             <li
               className={style.LogInHeaderItem}
               data-aos="fade-left"
-              data-aos-delay="600"
+              data-aos-delay="500"
             >
               <button
                 type="button"
-                className="btn btn-warning me-2"
+                className="btn btn-warning"
                 style={{
                   fontSize:
                     window.innerWidth <= 480
@@ -311,46 +282,76 @@ export function Header({ onLogout }) {
                       ? "8px 16px"
                       : "10px 20px",
                 }}
-                onClick={handleLogout}
-                disabled={loading}
+                onClick={handleOpenLoginModal}
               >
-                Sign Out
+                Sign In
               </button>
             </li>
-            <li
-              className={style.LogInHeaderItem}
-              data-aos="fade-left"
-              data-aos-delay="700"
-            >
-              <button
-                type="button"
-                className="btn"
-                onClick={handleOpenUserModal}
+          ) : (
+            <>
+              <li
+                className={style.LogInHeaderItem}
+                data-aos="fade-left"
+                data-aos-delay="600"
               >
-                <img
-                  src="./user.png"
-                  alt="User Avatar"
+                <button
+                  type="button"
+                  className="btn btn-warning me-2"
                   style={{
-                    width:
+                    fontSize:
                       window.innerWidth <= 480
-                        ? "28px"
+                        ? "12px"
                         : window.innerWidth <= 768
-                        ? "30px"
-                        : "32px",
-                    height:
+                        ? "14px"
+                        : "16px",
+                    padding:
                       window.innerWidth <= 480
-                        ? "28px"
+                        ? "6px 12px"
                         : window.innerWidth <= 768
-                        ? "30px"
-                        : "32px",
-                    borderRadius: "50%",
+                        ? "8px 16px"
+                        : "10px 20px",
                   }}
-                />
-              </button>
-            </li>
-          </>
-        )}
-      </ul>
+                  onClick={handleLogout}
+                  disabled={loading}
+                >
+                  Sign Out
+                </button>
+              </li>
+              <li
+                className={style.LogInHeaderItem}
+                data-aos="fade-left"
+                data-aos-delay="700"
+              >
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={handleOpenUserModal}
+                >
+                  <img
+                    src="./user.png"
+                    alt="User Avatar"
+                    style={{
+                      width:
+                        window.innerWidth <= 480
+                          ? "28px"
+                          : window.innerWidth <= 768
+                          ? "30px"
+                          : "32px",
+                      height:
+                        window.innerWidth <= 480
+                          ? "28px"
+                          : window.innerWidth <= 768
+                          ? "30px"
+                          : "32px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                </button>
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
 
       {showLoginModal && (
         <div
@@ -546,16 +547,13 @@ export function Header({ onLogout }) {
                       </button>
                     </span>
                   )}
-
-                  {/* <div className={style.timeDiv}>
-                    {`Текущее время: ${currentTime}`}
-                  </div> */}
                 </div>
               </div>
             </div>
           </div>
         </div>
       )}
+
       {showUserModal && (
         <div
           className="modal show"
@@ -607,7 +605,6 @@ export function Header({ onLogout }) {
                     ? auth.currentUser.email
                     : "No information"}
                 </div>
-                {/* Show current time in the user modal */}
               </div>
             </div>
           </div>
@@ -643,7 +640,6 @@ export function Header({ onLogout }) {
             >
               Contacts
             </a>
-            {/* Remove time from burger/mobile menu */}
             <a
               href="#"
               className={style.mobileLink}
@@ -679,7 +675,6 @@ export function Header({ onLogout }) {
               </>
             )}
           </div>
-
         </div>
       )}
     </header>
