@@ -14,6 +14,7 @@ import { CityProvider } from "./Context/cityContext";
 function App() {
   const { user, loading, signInWithGoogle, logout } = useAuth();
   const [login, setLogin] = useState(false);
+  const [favoriteWeather, setFavoriteWeather] = useState([]);
 
   React.useEffect(() => {
     setLogin(!!user);
@@ -22,6 +23,22 @@ function App() {
   if (loading) {
     return <div>Loading...</div>;
   }
+
+  const toggleFavorite = (day, city) => {
+    setFavoriteWeather(prev => {
+      const exists = prev.find(item => item.dt === day.dt && item.city === city);
+      if (exists) {
+        return prev.filter(item => !(item.dt === day.dt && item.city === city));
+      } else {
+        return [...prev, { ...day, city }];
+      }
+    });
+  };
+
+  const removeFromFavorite = (day, city) => {
+    setFavoriteWeather(prev => prev.filter(item => !(item.dt === day.dt && item.city === city)));
+  };
+
   return (
     <>
       <Header
@@ -33,7 +50,12 @@ function App() {
       <main>
         <CityProvider>
           <Hero></Hero>
-          <Weather></Weather>
+          <Weather
+            isLogin={login}
+            favoriteWeather={favoriteWeather}
+            toggleFavorite={toggleFavorite}
+            removeFromFavorite={removeFromFavorite}
+          ></Weather>
         </CityProvider>
         <News></News>
         <Slider></Slider>
