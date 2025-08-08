@@ -5,11 +5,15 @@ import style from './WeeklyWeather.module.scss'
 import cont from "../../../Container/Container.module.scss";
 
 export function WeeklyWeather() {
-    const { showWeeklyData, wheatherData } = useContext(CityContext);
+    const { showWeeklyData, wheatherData, selectedCityForWeekly } = useContext(CityContext);
 
-    if (!showWeeklyData) return
+    if (!showWeeklyData || !selectedCityForWeekly) return null;
 
-    const days = wheatherData.list.filter(obj => obj.dt_txt.includes('15:00:00'))
+    const cityWeather = wheatherData.find(item => item.city.toLowerCase() === selectedCityForWeekly.toLowerCase());
+
+    if (!cityWeather?.list) return null;
+
+    const days = cityWeather.list.filter(obj => obj.dt_txt.includes('15:00:00'));
 
     return <section className={style.weeklyWeather}>
         <div className={cont.container}>
