@@ -1,0 +1,48 @@
+.hourlyWeather {
+  padding-bottom: 80px;
+
+  &__bc {
+    width: 293px;
+    height: auto;
+    aspect-ratio: 1140 / 554;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: 834px) {
+      width: 634px;
+    padding: 20px;
+    }
+
+    @media screen and (min-width: 1240px) {
+      width: 1140px;
+    }
+  }
+
+  &__text {
+    color: #000;
+    font-family: Montserrat;
+    font-size: 10px;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 15px;
+    width: 100%;
+    padding-left: 20px;
+
+    @media screen and (min-width: 834px) {
+      font-size: 12px;
+    }
+
+    @media screen and (min-width: 1240px) {
+      font-size: 16px;
+    }
+  }
+}

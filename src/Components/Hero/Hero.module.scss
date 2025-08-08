@@ -1,11 +1,21 @@
 .hero {
-  padding-top: 100px;
+  padding-top: 50px;
   padding-bottom: 100px;
   background-color: rgba(0, 0, 0, 0.361);
   position: relative;
   overflow: hidden;
 
-    &__backgroundImage {
+  @media screen and (min-width: 834px) {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  @media screen and (min-width: 1240px) {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  &__backgroundImage {
     position: absolute;
     top: 0;
     left: 0;
@@ -28,63 +38,164 @@
   &__title {
     color: #fff;
     font-family: Montserrat;
-    font-size: 40px;
+    font-size: 14px;
+    font-style: normal;
     font-weight: 600;
+    line-height: normal;
     margin: 0;
-    margin-bottom: 80px;
     text-align: center;
+    margin-bottom: 50px;
+
+    @media screen and (min-width: 834px) {
+      font-size: 20px;
+      margin-bottom: 40px;
+    }
+
+    @media screen and (min-width: 1240px) {
+      font-size: 40px;
+      margin-bottom: 80px;
+      text-align: center;
+    }
   }
+
   &__box {
     display: flex;
     justify-content: center;
-    gap: 52px;
+    gap: 25px;
+
+    @media screen and (min-width: 834px) {
+      gap: 34px;
+    }
+
+    @media screen and (min-width: 1240px) {
+      gap: 52px;
+    }
   }
+
   &__text {
     color: #fff;
     font-family: Montserrat;
-    font-size: 24px;
+    font-size: 10px;
+    font-style: normal;
     font-weight: 500;
-    width: 345px;
-    text-align: left;
+    line-height: normal;
     margin: 0;
+    text-align: left;
+    width: 136px;
 
     &:nth-child(1) {
       text-align: right;
     }
+    @media screen and (min-width: 834px) {
+      font-size: 14px;
+      width: 172px;
+    }
+
+    @media screen and (min-width: 1240px) {
+      font-size: 24px;
+      width: 345px;
+    }
   }
   &__line {
-    width: 3px;
-    height: 144px;
+    width: 2px;
+    height: 80px;
     background: #fff;
     border-radius: 10px;
+
+    @media screen and (min-width: 834px) {
+      width: 2px;
+      height: 110px;
+    }
+
+    @media screen and (min-width: 1240px) {
+      width: 3px;
+      height: 144px;
+    }
   }
   &__form {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 48px;
+
+        @media screen and (min-width: 834px) {
+    margin-top: 64px;
+    }
+
+    @media screen and (min-width: 1240px) {
     margin-top: 80px;
+    }
   }
   &__input {
-    width: 580px;
-    height: 42px;
+    width: 173.8px;
+    height: 14.889px;
+    flex-shrink: 0;
     padding: 0;
-    padding-left: 29px;
-    font-size: 16px;
+    font-size: 6px;
+    padding-left: 10px;
     border-radius: 10px 0 0 10px;
     background: #d9d9d9;
     border: none;
+
+    @media screen and (min-width: 834px) {
+      width: 402px;
+      height: 27px;
+      padding-left: 18px;
+      font-size: 10px;
+    }
+
+    @media screen and (min-width: 1240px) {
+      width: 580px;
+      height: 42px;
+      padding-left: 29px;
+      font-size: 16px;
+    }
   }
   &__button {
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 5px 5px 0;
     border: none;
-    border-left: 1.5px solid #000000b4;
     background: #ffb36c;
-    width: 45px;
-    height: 42px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-left: 1px solid #000000b4;
+    width: 16.181px;
+    height: 15px;
+    padding: 0;
+
+    @media screen and (min-width: 834px) {
+      border-radius: 0 10px 10px 0;
+      width: 28.944px;
+      height: 27px;
+      border-left: 1.3px solid #000000b4;
+    }
+
+    @media screen and (min-width: 1240px) {
+      border-left: 1.5px solid #000000b4;
+      width: 45px;
+      height: 42px;
+    }
+
+    & span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &__svgSearch {
+    width: 8.99px;
+    height: 8.929px;
+
+    @media screen and (min-width: 834px) {
+      width: 16.08px;
+      height: 16.071px;
+    }
+
+    @media screen and (min-width: 1240px) {
+      width: 25px;
+      height: 25px;
+    }
   }
 }
 .hero .content {
@@ -93,8 +204,6 @@
   color: white;
 }
 
-
 .hero {
   margin-top: 66.6px;
 }
-

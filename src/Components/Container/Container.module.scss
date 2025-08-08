@@ -1,7 +1,16 @@
 .container {
-    max-width: 1550px;
-    margin: 0 auto;
-    padding: 0 20px;
+ max-width: 320px;
+  margin: 0 auto;
+  padding: 0 15px;
+  overflow: hidden;
+
+  @media screen and (min-width: 834px) {
+    max-width: 664px;
+  }
+
+  @media screen and (min-width: 1240px) {
+    max-width: 1170px;
+  }
   
     // __________________________________________________________________
     //  _   ____  _____ _     _____ _____ _____   _                     _ 

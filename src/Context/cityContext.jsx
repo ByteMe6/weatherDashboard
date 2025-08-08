@@ -1,17 +1,17 @@
 import { createContext, useState, useEffect } from "react";
 
-import { ModalMessage } from "../Components/Hero/ModalMessage/ModalMessage";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const CityContext = createContext(null);
 
 export const CityProvider = ({ children }) => {
   const [showWeeklyData, setShowWeeklyData] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('');
   const [city, setCity] = useState('');
 
   const [wheatherData, setWheatherData] = useState(null)
-
   const [seeMoreData, setseeMoreData] = useState([])
+  const [hourlyDataForDay, setHourlyDataForDay] = useState([]);
 
   const seeMore = (day) => {
     if (!wheatherData) return;
@@ -20,7 +20,21 @@ export const CityProvider = ({ children }) => {
     setseeMoreData(dataForDay);
   };
 
-  const seeWeklyData = ()=> {
+const seeHourlyWeather = (dateTime) => {
+  if (!wheatherData) return;
+
+  const startTime = new Date(dateTime).getTime();
+  const endTime = startTime + 24 * 60 * 60 * 1000;
+
+  const next24Hours = wheatherData.list.filter(item => {
+    const itemTime = new Date(item.dt_txt).getTime();
+    return itemTime >= startTime && itemTime <= endTime;
+  });
+
+  setHourlyDataForDay(next24Hours);
+};
+
+  const seeWeklyData = () => {
     if (showWeeklyData) return;
     setShowWeeklyData(true)
   }
@@ -33,6 +47,17 @@ export const CityProvider = ({ children }) => {
     setCity(cityName)
   };
 
+
+const deleteDay = (date) => {
+  setWheatherData(prev => {
+    if (!prev) return prev;
+    return {
+      ...prev,
+      list: prev.list.filter(obj => obj.dt_txt !== date)
+    };
+  });
+};
+
   useEffect(() => {
     if (!city) return;
 
@@ -42,7 +67,7 @@ export const CityProvider = ({ children }) => {
         const data = await res.json();
 
         if (data.cod !== "200") {
-          setErrorMessage("Місто не знайдено. Перевірте назву.");
+          toast.error("Місто не знайдено. Перевірте назву.");
           setWheatherData(null);
           return;
         }
@@ -51,7 +76,7 @@ export const CityProvider = ({ children }) => {
 
       } catch (error) {
         console.error("Помилка при запиті погоди:", error);
-        setErrorMessage("Сталася помилка при отриманні даних.");
+        toast.error("Сталася помилка при отриманні даних.");
         setWheatherData(null);
       }
     };
@@ -62,14 +87,21 @@ export const CityProvider = ({ children }) => {
   const currentWeather = wheatherData?.list?.[0]
 
   return (
-    <CityContext.Provider value={{ selectCity, city, wheatherData, seeMore, seeMoreData, currentWeather,seeWeklyData, showWeeklyData}}>
+    <CityContext.Provider value={{
+      selectCity,
+      city,
+      wheatherData,
+      seeMore,
+      seeMoreData,
+      currentWeather,
+      seeWeklyData,
+      showWeeklyData,
+      seeHourlyWeather,
+      hourlyDataForDay,
+      deleteDay
+    }}>
       {children}
-      {errorMessage && (
-        <ModalMessage
-          message={errorMessage}
-          onClose={() => setErrorMessage("")}
-        />
-      )}
+      <ToastContainer position="top-center" autoClose={3000} />
     </CityContext.Provider>
   );
 };
