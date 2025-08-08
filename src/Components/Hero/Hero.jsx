@@ -161,8 +161,6 @@ if (!currentWeather) {
       <button type="submit" className={styles.hero__button}>
         <span className={styles.hero__buttonLabel}>
           <svg className={styles.hero__svgSearch}
-            width="25"
-            height="25"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
