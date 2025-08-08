@@ -2,12 +2,11 @@ import "normalize.css";
 import { Header } from "./Components/Header/Header";
 import { Hero } from "./Components/Hero/Hero";
 import { Weather } from "./Components/Weather/Weather";
-import { News } from "./Components/News/news";
+import { News } from "./Components/News/News";
 import { Slider } from "./Components/Slider/Slider";
 import { Footer } from "./Components/Footer/Footer";
 import { useAuth } from "./hooks/useAuth";
 import React, { useState } from "react";
-
 
 import { CityProvider } from "./Context/cityContext";
 

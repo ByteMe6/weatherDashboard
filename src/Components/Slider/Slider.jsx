@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Slider.scss";
 
-// import { Conteiner } from "../Container/Container";
+import { Container } from "../Container/Container";
 import img1 from "../../images/Slider/Rectangle10.png";
 import img2 from "../../images/Slider/Rectangle11.png";
 import img3 from "../../images/Slider/Rectangle12.png";
@@ -40,21 +40,21 @@ export const Slider = () => {
   };
 
   return (
-    // <Conteiner>
-    <div className="slider-container">
-      <h1 className="titstyl">Beautiful nature</h1>
-      <div className="slider">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className={`slider-image ${getImageClass(index)}`}
-            onClick={() => handleImageClick(index)}
-          >
-            <img src={image} alt={`Slide ${index}`} />
-          </div>
-        ))}
+    <Container>
+      <div className="slider-container">
+        <h1 className="titstyl">Beautiful nature</h1>
+        <div className="slider">
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className={`slider-image ${getImageClass(index)}`}
+              onClick={() => handleImageClick(index)}
+            >
+              <img src={image} alt={`Slide ${index}`} />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-    // </Conteiner>
+    </Container>
   );
 };

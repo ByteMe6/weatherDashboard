@@ -8,18 +8,34 @@
   max-width: 1200px;
   margin-top: 50px;
   padding: 20px;
+
+  @media (max-width: 768px) {
+    // padding: 10px;
+    margin-top: 30px;
+  }
 }
+
 .titstyl {
   font-size: 20px;
   font-family: "Montserrat Alternates", sans-serif;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 }
+
 .slider {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 300px;
   position: relative;
+
+  @media (max-width: 768px) {
+    height: 200px;
+  }
 }
+
 .slider-image {
   position: absolute;
   transition: all 0.5s ease;
@@ -30,36 +46,40 @@
     height: 250px;
     transition: all 0.5s ease;
     border-radius: 8px;
+
+    @media (max-width: 768px) {
+      height: 150px;
+    }
   }
 
   &.left2 {
-    left: 17%;
-    transform: translateX(-50%) scale(0.6);
+    left: 10%;
+    transform: translateX(-50%) scale(0.5);
     z-index: 0;
   }
 
   &.left {
-    left: 28%;
-    transform: translateX(-50%) scale(0.8);
+    left: 25%;
+    transform: translateX(-50%) scale(0.7);
     z-index: 1;
   }
 
   &.center {
     left: 50%;
-    transform: translateX(-50%) scale(1);
+    transform: translateX(-50%) scale(0.9);
     z-index: 2;
     filter: brightness(1);
   }
 
   &.right {
-    left: 72%;
-    transform: translateX(-50%) scale(0.8);
+    left: 75%;
+    transform: translateX(-50%) scale(0.7);
     z-index: 1;
   }
 
   &.right2 {
-    left: 83%;
-    transform: translateX(-50%) scale(0.6);
+    left: 90%;
+    transform: translateX(-50%) scale(0.5);
     z-index: 0;
   }
 
