@@ -1,16 +1,18 @@
 .container {
- max-width: 320px;
+ max-width: 1200px;
   margin: 0 auto;
   padding: 0 15px;
   overflow: hidden;
 
-  @media screen and (min-width: 834px) {
-    max-width: 664px;
-  }
+  // @media screen and (min-width: 834px) {
+  //   max-width: 664px;
+  // }
 
-  @media screen and (min-width: 1240px) {
-    max-width: 1170px;
-  }
+  // @media screen and (min-width: 1240px) {
+  //   max-width: 1170px;
+  // }
+
+  // ВИКА, ТАК ДЕЛАТЬ НЕ В КОЕМ СЛУЧАЕ НЕ НАДО. обьясняю, суть контейнера чтобы на больших экранах не разбегалось все по экрану, в остальных случаях (экраны меньше 1200 пх) контейнер не должен быть заметен
   
     // __________________________________________________________________
     //  _   ____  _____ _     _____ _____ _____   _                     _ 
