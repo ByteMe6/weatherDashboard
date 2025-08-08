@@ -8,7 +8,6 @@ import { Footer } from "./Components/Footer/Footer";
 import { useAuth } from "./hooks/useAuth";
 import React, { useState } from "react";
 
-
 import { CityProvider } from "./Context/cityContext";
 
 function App() {
