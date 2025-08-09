@@ -3,6 +3,10 @@
   margin: 0 auto;
   padding: 0 15px;
   overflow: hidden;
+  display: flex;
+  // flex-direction: column;
+  align-items: center;
+  // justify-content: center;
 
   // @media screen and (min-width: 834px) {
   //   max-width: 664px;
