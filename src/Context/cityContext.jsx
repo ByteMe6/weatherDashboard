@@ -9,13 +9,18 @@ export const CityProvider = ({ children }) => {
   const [selectedCityForWeekly, setSelectedCityForWeekly] = useState(null);
   const [showWeeklyData, setShowWeeklyData] = useState(false)
   const [city, setCity] = useState('');
+  const [currentWeather, setCurrentWeather] = useState(null);
 
   const [wheatherData, setWheatherData] = useState([])
   const [seeMoreData, setseeMoreData] = useState([])
   const [hourlyDataForDay, setHourlyDataForDay] = useState([]);
 
   const removeCity = (cityName) => {
-    setWheatherData(prev => prev.filter(item => item.city.toLowerCase() !== cityName.toLowerCase()));
+    setWheatherData(prev => {
+      const updated = prev.filter(item => item.city.toLowerCase() !== cityName.toLowerCase());
+      console.log(updated);
+      return updated;
+    });
   };
 
   const selectCityForWeekly = (cityName) => {
@@ -80,29 +85,35 @@ export const CityProvider = ({ children }) => {
         const data = await res.json();
 
         if (data.cod !== "200") {
-          toast.error("Місто не знайдено. Перевірте назву.");
+          toast.error("City not found. Check the name.");
           return;
         }
 
         setWheatherData(prev => {
           const filtered = prev.filter(item => item.city.toLowerCase() !== data.city.name.toLowerCase());
+          console.log([{ city: data.city.name, list: data.list }, ...filtered])
           return [{ city: data.city.name, list: data.list }, ...filtered];
         });
 
 
       } catch (error) {
-        console.error("Помилка при запиті погоди:", error);
-        toast.error("Сталася помилка при отриманні даних.");
+        console.error("Error when requesting weather:", error);
+        toast.error("An error occurred while retrieving data.");
       }
     };
 
     fetchWeather();
   }, [city]);
-  
-const currentCityData = wheatherData.find(item => item.city.toLowerCase() === city.toLowerCase());
-const currentWeather = currentCityData?.list?.[0]?.weather?.[0]?.main || null;
-console.log('Current weather:', currentWeather);
 
+  useEffect(() => {
+    if (!city || !wheatherData.length) {
+      setCurrentWeather(null);
+      return;
+    }
+
+    const currentCityData = wheatherData.find(item => item.city.toLowerCase() === city.toLowerCase());
+    setCurrentWeather(currentCityData?.list?.[0]?.weather?.[0]?.main || null);
+  }, [city, wheatherData]);
 
   return (
     <CityContext.Provider value={{

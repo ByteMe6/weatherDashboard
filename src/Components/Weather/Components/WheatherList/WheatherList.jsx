@@ -16,7 +16,7 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
         removeCity } = useContext(CityContext);
 
     const [localDays, setLocalDays] = useState([]);
-
+    const [wasDataOnce, setWasDataOnce] = useState(false);
 
     useEffect(() => {
         if (wheatherData.length) {
@@ -39,10 +39,31 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
         }
     }, [wheatherData]);
 
+    useEffect(() => {
+        if (wheatherData.length > 0 && !wasDataOnce) {
+            setWasDataOnce(true);
+        }
+    }, [wheatherData, wasDataOnce]);
+
+    if (wheatherData.length === 0) {
+        if (wasDataOnce) {
+            return (
+                <section className={style.wheatherList}>
+                    <div className={cont.container}>
+                        <div className={style.wheatherList__empty}>
+                            <p className={style.wheatherList__emptyText}>There are no cities listed</p>
+                        </div>
+                    </div>
+                </section>
+            );
+        } else {
+            return null;
+        }
+    }
 
     if (!localDays.length) return null;
 
-    const notifyLoginRequired = () => toast.warn("Будь ласка, увійдіть, щоб скористатися цією функцією");
+    const notifyLoginRequired = () => toast.warn("Please log in to use this feature.");
 
     const handleSeeHourlyWeather = (cityName, date) => {
         if (!isLogin) {
@@ -69,12 +90,11 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
     };
 
     const handleDeleteDay = (cityName) => {
-        removeCity(cityName);
-
         const cityData = wheatherData.find(c => c.city === cityName);
         if (cityData) {
             cityData.list.forEach(day => removeFromFavorite(day, cityName));
         }
+        removeCity(cityName);
     };
 
     const handleFavorite = (day, cityData) => {
@@ -84,6 +104,23 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
         }
         toggleFavorite(day, cityData)
     }
+
+    const handleRefresh = (cityName) => {
+        setLocalDays(prevLocalDays => {
+            return prevLocalDays.map(cityDay => {
+                if (cityDay.city !== cityName) return cityDay;
+
+                const cityFullData = wheatherData.find(c => c.city === cityName);
+                if (!cityFullData) return cityDay;
+
+                const currentIndex = cityFullData.list.findIndex(item => item.dt === cityDay.days[0].dt);
+
+                const nextIndex = (currentIndex + 1) % cityFullData.list.length;
+
+                return { city: cityName, days: [cityFullData.list[nextIndex]] };
+            });
+        });
+    };
 
 
     const isFavorite = (day, city) => favoriteWeather.some(item => item.dt === day.dt && item.city === city);
@@ -141,9 +178,10 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
                                         <p className={style.wheatherList__textTemp}>{Math.floor(day.main.temp)}°C</p>
 
                                         <div className={style.wheatherList__footer}>
-                                            <button className={style.wheatherList__refreshBtn}
-                                                disabled={!isLogin}
-                                                title={!isLogin ? "Please log in to use this feature" : ""}>
+                                            <button
+                                                onClick={() => handleRefresh(cityData.city)}
+                                                className={style.wheatherList__refreshBtn}
+                                            >
                                                 <svg className={style.wheatherList__refreshSvg} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" id="Autorenew--Streamline-Sharp-Material" height="30" width="30">
                                                     <path fill="#000000" d="M6.125 19.65625c-0.41666875 -0.75 -0.70833125 -1.5051875000000001 -0.875 -2.265625 -0.16666875 -0.7603749999999999 -0.25 -1.5364375 -0.25 -2.328125 0 -2.729125 0.984375 -5.078125 2.953125 -7.046875C9.921875 6.0468875 12.270812499999998 5.062518750000001 15 5.062518750000001h1.34375l-2.5 -2.5000062499999998 1.21875 -1.21875 4.65625 4.65625625L15.0625 10.65625l-1.25 -1.25 2.46875 -2.46875H15c-2.2291875 0 -4.140625 0.796875 -5.734375 2.390625C7.671875 10.921875 6.875 12.833375 6.875 15.0625c0 0.6041875 0.0573125 1.177125 0.171875 1.71875 0.1145625 0.5416875 0.2551875 1.052125 0.421875 1.53125L6.125 19.65625ZM14.875 28.75l-4.65625 -4.65625 4.65625 -4.65625 1.21875 1.21875 -2.5 2.5H15c2.2291875 0 4.140625 -0.796875 5.734375 -2.390625C22.328125 19.171875 23.125 17.260437500000002 23.125 15.03125c0 -0.604125 -0.0520625 -1.1770625 -0.15625 -1.71875 -0.10418749999999999 -0.541625 -0.2604375 -1.0520625 -0.46875 -1.53125l1.34375 -1.34375c0.4166875 0.75 0.7135625 1.50525 0.890625 2.265625 0.1770625 0.7604374999999999 0.265625 1.5365000000000002 0.265625 2.328125 0 2.7291875 -0.984375 5.078125 -2.953125 7.046875 -1.96875 1.96875 -4.3176875 2.953125 -7.046875 2.953125h-1.40625l2.5 2.5L14.875 28.75Z" strokeWidth="0.625"></path>
                                                 </svg>
