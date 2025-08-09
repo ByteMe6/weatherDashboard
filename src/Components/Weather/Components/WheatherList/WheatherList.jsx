@@ -3,17 +3,34 @@ import { CityContext } from '../../../../Context/cityContext';
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, transform } from "framer-motion";
 
 import style from './WheatherList.module.scss';
 import cont from "../../../Container/Container.module.scss";
+
+import sunny from '../../../../images/Weather/weatherIcons/sunny.svg'
+import moon from '../../../../images/Weather/weatherIcons/moon.png'
+import fewСloudsSun from '../../../../images/Weather/weatherIcons/fewСloudsSun.svg'
+import fewСloudsMoon from '../../../../images/Weather/weatherIcons/fewСloudsMoon.png'
+import scatteredClouds from '../../../../images/Weather/weatherIcons/scatteredClouds.svg'
+import overcastClouds from '../../../../images/Weather/weatherIcons/overcastClouds.svg'
+import lightRainSun from '../../../../images/Weather/weatherIcons/lightRainSun.svg'
+import lightRainMoon from '../../../../images/Weather/weatherIcons/lightRainMoon.png'
+import rain from '../../../../images/Weather/weatherIcons/rain.png'
+import thunderstorm from '../../../../images/Weather/weatherIcons/thunderstorm.png'
+import snowy from '../../../../images/Weather/weatherIcons/snowy.png'
+import mist from '../../../../images/Weather/weatherIcons/mist.svg'
 
 export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeFromFavorite, }) {
     const { wheatherData,
         seeMore,
         seeHourlyWeather,
         selectCityForWeekly,
-        removeCity } = useContext(CityContext);
+        removeCity,
+        setShowWeeklyData,
+        setHourlyDataForDay,
+        setseeMoreData
+    } = useContext(CityContext);
 
     const [localDays, setLocalDays] = useState([]);
     const [wasDataOnce, setWasDataOnce] = useState(false);
@@ -45,6 +62,14 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
         }
     }, [wheatherData, wasDataOnce]);
 
+    useEffect(() => {
+        if (wheatherData.length === 0) {
+            setShowWeeklyData(true);
+            setHourlyDataForDay([]);
+            setseeMoreData([]);
+        }
+    }, [wheatherData]);
+
     if (wheatherData.length === 0) {
         if (wasDataOnce) {
             return (
@@ -60,7 +85,6 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
             return null;
         }
     }
-
     if (!localDays.length) return null;
 
     const notifyLoginRequired = () => toast.warn("Please log in to use this feature.");
@@ -122,8 +146,28 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
         });
     };
 
-
     const isFavorite = (day, city) => favoriteWeather.some(item => item.dt === day.dt && item.city === city);
+
+    const customIcons = {
+        "01d": sunny,
+        "01n": moon,
+        "02d": fewСloudsSun,
+        "02n": fewСloudsMoon,
+        "03d": scatteredClouds,
+        "03n": scatteredClouds,
+        "04d": overcastClouds,
+        "04n": overcastClouds,
+        "09d": lightRainSun,
+        "09n": lightRainMoon,
+        "10d": rain,
+        "10n": rain,
+        "11d": thunderstorm,
+        "11n": thunderstorm,
+        "13d": snowy,
+        "13n": snowy,
+        "50d": mist,
+        "50n": mist,
+    };
 
     return (
         <section className={style.wheatherList}>
@@ -137,9 +181,13 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
                                 const date = new Date(day.dt_txt);
                                 const daysOfWeek = ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', 'Пʼятниця', 'Субота'];
                                 const dayName = daysOfWeek[date.getDay()];
+
+                                const iconCodeFull = day.weather[0].icon;
+                                const iconSrc = customIcons[iconCodeFull];
+
                                 return (
                                     <motion.li
-                                        key={cityData.city}
+                                        key={`${cityData.city.name}-${day.dt}`}
                                         layout
                                         initial={{ opacity: 0, x: 50 }}
                                         animate={{ opacity: 1, x: 0 }}
@@ -171,7 +219,7 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
 
                                         <img
                                             className={style.wheatherList__icon}
-                                            src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@4x.png`}
+                                            src={iconSrc}
                                             alt={day.weather[0].description}
                                         />
 

@@ -130,6 +130,9 @@ export const CityProvider = ({ children }) => {
       hourlyDataForDay,
       removeCity,
       currentWeather,
+      setShowWeeklyData,
+      setHourlyDataForDay,
+      setseeMoreData
     }}>
       {children}
       <ToastContainer position="top-center" autoClose={3000} />
