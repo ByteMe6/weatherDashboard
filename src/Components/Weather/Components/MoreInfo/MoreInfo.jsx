@@ -23,8 +23,8 @@ export function MoreInfo() {
         if (meters >= 1) return `${meters} m (Very poor)`;
         return 'No visibility';
     }
-
-    const data = seeMoreData.filter(obj => obj.dt_txt.includes('15:00:00')).slice(0, 3).find(obj => obj.dt_txt.includes('15:00:00'))
+    
+    const data = seeMoreData[0]
 
     return (
         <section className={style.moreInfo}>

@@ -19,15 +19,25 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
 
     useEffect(() => {
         if (wheatherData.length) {
+            const now = new Date();
+
             const updatedLocalDays = wheatherData.map(cityData => {
-                const filteredDays = cityData.list.filter(day => day.dt_txt.includes('15:00:00'));
-                if (filteredDays.length === 0) return null;
-                return { city: cityData.city, days: [filteredDays[0]] };
-            }).filter(Boolean);
+                const closestForecast = cityData.list.reduce((closest, current) => {
+                    const currentTime = new Date(current.dt_txt);
+                    const closestTime = new Date(closest.dt_txt);
+
+                    return Math.abs(currentTime - now) < Math.abs(closestTime - now)
+                        ? current
+                        : closest;
+                }, cityData.list[0]);
+
+                return { city: cityData.city, days: [closestForecast] };
+            });
 
             setLocalDays(updatedLocalDays);
         }
     }, [wheatherData]);
+
 
     if (!localDays.length) return null;
 
@@ -40,6 +50,14 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
         }
         seeHourlyWeather(cityName, date);
     };
+
+    const handleSeeWeeklyWeather = (cityData) => {
+        if (!isLogin) {
+            notifyLoginRequired();
+            return;
+        }
+        selectCityForWeekly(cityData)
+    }
 
     const handleSeeMore = (cityName, date) => {
         if (!isLogin) {
@@ -57,6 +75,15 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
             cityData.list.forEach(day => removeFromFavorite(day, cityName));
         }
     };
+
+    const handleFavorite = (day, cityData) => {
+        if (!isLogin) {
+            notifyLoginRequired();
+            return;
+        }
+        toggleFavorite(day, cityData)
+    }
+
 
     const isFavorite = (day, city) => favoriteWeather.some(item => item.dt === day.dt && item.city === city);
 
@@ -76,11 +103,13 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
                                         <p className={style.wheatherList__textTime}>{day.dt_txt.split(' ')[1].split(':').slice(0, 2).join(':')}</p>
 
                                         <div className={style.wheatherList__buttons}>
-                                            <button onClick={() => handleSeeHourlyWeather(cityData.city, day.dt_txt)} className={style.wheatherList__button}>
+                                            <button
+                                                onClick={() => handleSeeHourlyWeather(cityData.city, day.dt_txt)}
+                                                className={style.wheatherList__button}>
                                                 Hourly forecast
                                             </button>
                                             <button
-                                                onClick={() => selectCityForWeekly(cityData.city)}
+                                                onClick={() => handleSeeWeeklyWeather(cityData.city)}
                                                 className={style.wheatherList__button}>
                                                 Weekly forecast
                                             </button>
@@ -98,7 +127,7 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
                                             alt={day.weather[0].description}
                                         />
 
-                                        <p className={style.wheatherList__textTemp}>{day.main.temp}°C</p>
+                                        <p className={style.wheatherList__textTemp}>{ Math.floor(day.main.temp)}°C</p>
 
                                         <div className={style.wheatherList__footer}>
                                             <button className={style.wheatherList__refreshBtn}
@@ -109,9 +138,7 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
                                                 </svg>
                                             </button>
                                             <button
-                                                onClick={() => toggleFavorite(day, cityData.city)}
-                                                disabled={!isLogin}
-                                                title={!isLogin ? "Please log in to use this feature" : ""}
+                                                onClick={() => handleFavorite(day, cityData.city)}
                                                 className={style.wheatherList__favoriteBtn}
                                                 aria-label="Toggle favorite"
                                                 type="button"
@@ -131,7 +158,7 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
                                             <button onClick={() => handleSeeMore(cityData.city, day.dt_txt)} className={style.wheatherList__seeMore}>
                                                 see more
                                             </button>
-                                            <button  onClick={() => handleDeleteDay(cityData.city)} className={style.wheatherList__deleteBtn}>
+                                            <button onClick={() => handleDeleteDay(cityData.city)} className={style.wheatherList__deleteBtn}>
                                                 <svg className={style.wheatherList__deleteSvg} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" id="Delete--Streamline-Sharp-Material" height="30" width="30">
                                                     <path fill="#000000" d="M6.28125 26.25V6.5625H5v-1.875h5.875V3.75h8.25v0.9375H25v1.875h-1.28125V26.25h-17.4375Zm1.875 -1.875h13.6875V6.5625h-13.6875V24.375Zm3.3125 -2.6875h1.875V9.21875h-1.875V21.6875Zm5.1875 0h1.875V9.21875h-1.875V21.6875Z" strokeWidth="0.625"></path>
                                                 </svg>

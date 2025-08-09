@@ -15,8 +15,8 @@ export const CityProvider = ({ children }) => {
   const [hourlyDataForDay, setHourlyDataForDay] = useState([]);
 
   const removeCity = (cityName) => {
-  setWheatherData(prev => prev.filter(item => item.city.toLowerCase() !== cityName.toLowerCase()));
-};
+    setWheatherData(prev => prev.filter(item => item.city.toLowerCase() !== cityName.toLowerCase()));
+  };
 
   const selectCityForWeekly = (cityName) => {
     setSelectedCityForWeekly(cityName);
@@ -98,8 +98,11 @@ export const CityProvider = ({ children }) => {
 
     fetchWeather();
   }, [city]);
+  
+const currentCityData = wheatherData.find(item => item.city.toLowerCase() === city.toLowerCase());
+const currentWeather = currentCityData?.list?.[0]?.weather?.[0]?.main || null;
+console.log('Current weather:', currentWeather);
 
-const currentWeather = wheatherData.find(item => item.city.toLowerCase() === city.toLowerCase())?.list?.[0];
 
   return (
     <CityContext.Provider value={{
@@ -108,14 +111,14 @@ const currentWeather = wheatherData.find(item => item.city.toLowerCase() === cit
       wheatherData,
       seeMore,
       seeMoreData,
-      currentWeather,
       seeWeklyData,
       showWeeklyData,
       selectedCityForWeekly,
       selectCityForWeekly,
       seeHourlyWeather,
       hourlyDataForDay,
-      removeCity
+      removeCity,
+      currentWeather,
     }}>
       {children}
       <ToastContainer position="top-center" autoClose={3000} />

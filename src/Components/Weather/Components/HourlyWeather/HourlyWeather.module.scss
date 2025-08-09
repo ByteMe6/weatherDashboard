@@ -2,7 +2,6 @@
   padding-bottom: 80px;
 
   &__bc {
-    width: 293px;
     height: auto;
     aspect-ratio: 1140 / 554;
     flex-shrink: 0;
@@ -18,7 +17,6 @@
     flex-direction: column;
 
     @media screen and (min-width: 834px) {
-      width: 634px;
     padding: 20px;
     }
 

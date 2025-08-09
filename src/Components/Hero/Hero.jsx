@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useState } from "react"
 import { useContext } from "react";
 
@@ -25,9 +25,6 @@ export function Hero() {
   }
 
   const { selectCity, currentWeather } = useContext(CityContext)
-  useEffect(() => {
-    if (currentWeather === undefined) return
-  }, [currentWeather])
 
   // background
 
@@ -48,8 +45,7 @@ export function Hero() {
     Tornado: windy
   };
 
-  const weatherKey = currentWeather?.weather?.[0]?.main;
-  const weatherVideo = weatherMap[weatherKey] || cloudy;
+  const weatherVideo = weatherMap[currentWeather] || cloudy;
 
   // date
 
@@ -132,10 +128,8 @@ if (!currentWeather) {
   )
 }
 
-
-
   return <section className={styles.hero}>
-    <video key={weatherKey} autoPlay muted loop playsInline className={styles.hero__backgroundVideo} style={{ zIndex: -1 }}>
+    <video key={currentWeather} autoPlay muted loop playsInline className={styles.hero__backgroundVideo} style={{ zIndex: -1 }}>
       <source src={weatherVideo} type="video/mp4" />
     </video>
 
