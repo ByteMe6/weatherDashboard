@@ -16,6 +16,7 @@ export function Footer() {
           alignItems: "center",
           gap: "30px",
           flexWrap: "wrap",
+          width:"100%",
         }}
       >
         <img src="./logo.png" alt="" />
