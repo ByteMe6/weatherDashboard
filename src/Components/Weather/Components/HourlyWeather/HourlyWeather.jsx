@@ -72,7 +72,9 @@ export function HourlyWeather() {
 
     return <section className={style.hourlyWeather}>
         <div className={cont.container}>
-            <div className={style.hourlyWeather__bc}>
+            <div className={style.hourlyWeather__bc}  data-aos="fade-up"
+                    data-aos-duration="1200"
+                    data-aos-anchor-placement="top-bottom">
                 <p className={style.hourlyWeather__text}>Hourly forecast</p>
                 <div style={{ width: "100%", height: "100%" }}>
                     <Line data={data} options={options} />

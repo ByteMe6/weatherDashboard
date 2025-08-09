@@ -23,13 +23,15 @@ export function MoreInfo() {
         if (meters >= 1) return `${meters} m (Very poor)`;
         return 'No visibility';
     }
-    
+
     const data = seeMoreData[0]
 
     return (
         <section className={style.moreInfo}>
             <div className={cont.container}>
-                <div className={style.moreInfo__background}>
+                <div className={style.moreInfo__background} data-aos="fade-up"
+                    data-aos-duration="1200"
+                    data-aos-anchor-placement="top-bottom">
                     <ul className={style.moreInfo__list}>
                         <li className={style.moreInfo__item}>
                             <p className={style.moreInfo__smallText}>feels like</p>

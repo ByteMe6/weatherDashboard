@@ -17,7 +17,9 @@ export function WeeklyWeather() {
 
     return <section className={style.weeklyWeather}>
         <div className={cont.container}>
-            <div className={style.weeklyWeather__background}>
+            <div className={style.weeklyWeather__background} data-aos="fade-up"
+                data-aos-duration="1200"
+                data-aos-anchor-placement="top-bottom">
                 <h6 className={style.weeklyWeather__title}>5-day forecast</h6>
                 <ul className={style.weeklyWeather__list}>
                     {days.map((day, indx) => {
@@ -31,10 +33,11 @@ export function WeeklyWeather() {
                         const dayName = daysOfWeek[date.getDay()].slice(0, 3);
                         const monthName = months[date.getMonth()].slice(0, 3);
                         const dayNumber = date.getDate();
-
-                        console.log(day)
+                        
                         return (
-                            <li className={style.weeklyWeather__item} key={indx}>
+                            <li className={style.weeklyWeather__item} key={indx} data-aos="fade-up"
+                                data-aos-duration='1300'
+                                data-aos-anchor-placement="top-bottom">
                                 <p className={style.weeklyWeather__date}>{dayName}, {monthName} {dayNumber}</p>
                                 <div className={style.weeklyWeather__iconTemp}>
                                     <img

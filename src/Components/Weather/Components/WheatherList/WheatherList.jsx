@@ -3,6 +3,7 @@ import { CityContext } from '../../../../Context/cityContext';
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { motion, AnimatePresence } from "framer-motion";
 
 import style from './WheatherList.module.scss';
 import cont from "../../../Container/Container.module.scss";
@@ -90,15 +91,25 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
     return (
         <section className={style.wheatherList}>
             <div className={cont.container}>
-                <ul className={style.wheatherList__list}>
-                    {localDays.map(cityData => (
-                        <React.Fragment key={cityData.city}>
-                            {cityData.days.map(day => {
+                <motion.ul
+                    className={style.wheatherList__list}
+                    style={{ display: 'flex', overflowX: 'hidden' }}>
+                    <AnimatePresence>
+                        {localDays.map(cityData => (
+                            cityData.days.map((day) => {
                                 const date = new Date(day.dt_txt);
                                 const daysOfWeek = ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', 'Пʼятниця', 'Субота'];
                                 const dayName = daysOfWeek[date.getDay()];
                                 return (
-                                    <li key={day.dt} className={style.wheatherList__item}>
+                                    <motion.li
+                                        key={cityData.city}
+                                        layout
+                                        initial={{ opacity: 0, x: 50 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -50 }}
+                                        transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                                        className={style.wheatherList__item}
+                                    >
                                         <p className={style.wheatherList__textCity}>{cityData.city}</p>
                                         <p className={style.wheatherList__textTime}>{day.dt_txt.split(' ')[1].split(':').slice(0, 2).join(':')}</p>
 
@@ -127,7 +138,7 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
                                             alt={day.weather[0].description}
                                         />
 
-                                        <p className={style.wheatherList__textTemp}>{ Math.floor(day.main.temp)}°C</p>
+                                        <p className={style.wheatherList__textTemp}>{Math.floor(day.main.temp)}°C</p>
 
                                         <div className={style.wheatherList__footer}>
                                             <button className={style.wheatherList__refreshBtn}
@@ -164,12 +175,12 @@ export function WheatherList({ isLogin, favoriteWeather, toggleFavorite, removeF
                                                 </svg>
                                             </button>
                                         </div>
-                                    </li>
+                                    </motion.li>
                                 );
-                            })}
-                        </React.Fragment>
-                    ))}
-                </ul>
+                            })
+                        ))}
+                    </AnimatePresence>
+                </motion.ul>
             </div>
             <ToastContainer
                 position="top-center"
