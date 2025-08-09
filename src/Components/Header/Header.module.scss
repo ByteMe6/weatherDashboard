@@ -1,7 +1,6 @@
 @use "../../scssUseful/vars" as *;
 @use "sass:color";
 
-// Увеличиваем размер часов
 .clock {
   font-size: 1rem;
   font-weight: bold;
@@ -10,7 +9,7 @@
 
 header {
   margin: 0;
-  padding: $spacing-lg;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -99,9 +98,6 @@ header {
       .burgerLine {
         &:nth-child(1) {
           transform: rotate(45deg) translate(6px, 6px);
-        }
-        &:nth-child(2) {
-          opacity: 0;
         }
         &:nth-child(3) {
           transform: rotate(-45deg) translate(6px, -6px);
@@ -217,7 +213,7 @@ header {
 
 @media (max-width: 1024px) {
   header {
-    padding: $spacing-md;
+    padding: 0;
     
     .links {
       & > * {
@@ -243,7 +239,7 @@ header {
 
 @media (max-width: 768px) {
   header {
-    padding: $spacing-sm;
+    padding: 0;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -281,7 +277,7 @@ header {
 
 @media (max-width: 480px) {
   header {
-    padding: $spacing-xs;
+    padding: 0;
     
     .nav {
       img {
@@ -368,8 +364,25 @@ header {
   z-index: $z-header;
 }
 
-// Делаем bootstrap-модалку непрозрачной
+
 :global(.modal-content) {
-  background-color: #fff !important;
-  opacity: 1 !important;
+  // background-color: #ff0000 !important;
+  opacity: 100 !important;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 1200px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+
+  }
+}
+.header {
+  width: 100%;
+  left: 0;
+  right: 0;
 }

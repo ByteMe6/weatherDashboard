@@ -9,6 +9,7 @@ import { useAuth } from "./hooks/useAuth";
 import React, { useState } from "react";
 
 import { CityProvider } from "./Context/cityContext";
+import "./marginTop60px.css" //не трогать
 
 function App() {
   const { user, loading, signInWithGoogle, logout } = useAuth();
