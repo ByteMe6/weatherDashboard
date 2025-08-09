@@ -71,62 +71,62 @@ export function Hero() {
 
   const fullDate = `${monthName} ${year}\n${dayName}, ${getOrdinalSuffix(day)}`;
 
-if (!currentWeather) {
-  return (
-    <section className={styles.hero}>
-      <img className={styles.hero__backgroundImage} src={mainImage} alt="" style={{ zIndex: -1 }} />
+  if (!currentWeather) {
+    return (
+      <section className={styles.hero}>
+        <img className={styles.hero__backgroundImage} src={mainImage} alt="" style={{ zIndex: -1 }} />
 
-    <h1 className={styles.hero__title}>Weather dashboard</h1>
-    <div className={styles.hero__box}>
-      <p className={styles.hero__text}>
-        Create your personal list of favorite cities and always be aware of the weather.
-      </p>
-      <div className={styles.hero__line}></div>
-      <p className={styles.hero__text}>{fullDate}</p>
-    </div>
+        <h1 className={styles.hero__title}>Weather dashboard</h1>
+        <div className={styles.hero__box}>
+          <p className={styles.hero__text}>
+            Create your personal list of favorite cities and always be aware of the weather.
+          </p>
+          <div className={styles.hero__line}></div>
+          <p className={styles.hero__text}>{fullDate}</p>
+        </div>
 
-    <form className={styles.hero__form} onSubmit={sendSearchedCity}>
-      <input
-        name="CityInp"
-        className={styles.hero__input}
-        type="text"
-        autoComplete="off"
-        autoFocus
-        placeholder="Search location..."
-        onChange={(e) => setCityName(e.target.value)}
-      />
-      <button type="submit" className={styles.hero__button}>
-        <span className={styles.hero__buttonLabel}>
-          <svg className={styles.hero__svgSearch}
-            width="25"
-            height="25"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle
-              cx="11"
-              cy="11"
-              r="7"
-              stroke="#000000b4"
-              strokeWidth="2"
-            />
-            <line
-              x1="16.6569"
-              y1="16.6569"
-              x2="21"
-              y2="21"
-              stroke="#000000b4"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-        </span>
-      </button>
-    </form>
-  </section>
-  )
-}
+        <form data-aos="fade-up" data-aos-duration="1200" className={styles.hero__form} onSubmit={sendSearchedCity}>
+          <input
+            name="CityInp"
+            className={styles.hero__input}
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search location..."
+            onChange={(e) => setCityName(e.target.value)}
+          />
+          <button type="submit" className={styles.hero__button}>
+            <span className={styles.hero__buttonLabel}>
+              <svg className={styles.hero__svgSearch}
+                width="25"
+                height="25"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="11"
+                  cy="11"
+                  r="7"
+                  stroke="#000000b4"
+                  strokeWidth="2"
+                />
+                <line
+                  x1="16.6569"
+                  y1="16.6569"
+                  x2="21"
+                  y2="21"
+                  stroke="#000000b4"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
+          </button>
+        </form>
+      </section>
+    )
+  }
 
   return <section className={styles.hero}>
     <video key={currentWeather} autoPlay muted loop playsInline className={styles.hero__backgroundVideo} style={{ zIndex: -1 }}>

@@ -13,7 +13,8 @@
 
     @media screen and (min-width: 1240px) {
       justify-content: start;
-      gap: 88px;
+      row-gap: 50px;
+      column-gap: 100px;
     }
   }
   &__item {
@@ -77,9 +78,15 @@
     font-weight: 500;
     background: #ffb36c;
     border-radius: 10px;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.07);
+      border: none;
+    }
 
     @media screen and (min-width: 834px) {
-           width: 96px;
+      width: 96px;
       height: 23px;
       white-space: nowrap;
       border-radius: 5px;
@@ -197,6 +204,12 @@
   &__deleteBtn {
     background-color: transparent;
     padding: 0;
+    border: none;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
   &__seeMore {
     display: inline-flex;
@@ -215,6 +228,12 @@
     border-radius: 10px;
     background: #ffb36c;
     font-size: 9px;
+    border: none;
+    transition: transform 0.3s ease; // плавний перехід трансформації
+
+    &:hover {
+      transform: scale(1.1); // збільшення на 10%
+    }
 
     @media screen and (min-width: 834px) {
       display: flex;
