@@ -7,9 +7,10 @@ import { Slider } from "./Components/Slider/Slider";
 import { Footer } from "./Components/Footer/Footer";
 import { useAuth } from "./hooks/useAuth";
 import React, { useState } from "react";
-
 import { CityProvider } from "./Context/cityContext";
-import "./marginTop60px.css" //не трогать
+import "./marginTop60px.css"; //не трогать
+
+import { Fav } from "./Components/Fauvorite/Fav";
 
 function App() {
   const { user, loading, signInWithGoogle, logout } = useAuth();
@@ -46,19 +47,22 @@ function App() {
         login={login}
         onLogin={signInWithGoogle}
         onLogout={logout}
+        favoriteWeather={favoriteWeather}
+        removeFromFavorite={removeFromFavorite}
+        isLogin={login}
       />
       <main>
         <CityProvider>
-          <Hero></Hero>
+          <Hero />
           <Weather
             isLogin={login}
             favoriteWeather={favoriteWeather}
             toggleFavorite={toggleFavorite}
             removeFromFavorite={removeFromFavorite}
-          ></Weather>
+          />
         </CityProvider>
-        <News></News>
-        <Slider></Slider>
+        <News />
+        <Slider />
       </main>
       <Footer />
     </>

@@ -1,0 +1,153 @@
+.favModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: auto;
+}
+
+.favModal {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(26, 110, 216, 0.18), 0 1.5px 8px rgba(0,0,0,0.08);
+  padding: 32px 24px 28px 24px;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.favModalScroll {
+  overflow-y: auto;
+  overflow-x: auto;
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 32px;
+  padding-right: 12px;
+  justify-content: center;
+  scrollbar-width: thin;
+  scrollbar-color: #b0b8c1 #f0f0f0;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #b0b8c1;
+    border-radius: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+}
+
+.favModalClose {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: transparent;
+  border: none;
+  color: #b0b8c1;
+  font-size: 1.7rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s, transform 0.2s;
+
+  &:hover {
+    color: #e53935;
+    transform: scale(1.15);
+    background: #ffeaea;
+    border-radius: 50%;
+  }
+}
+
+.removeBtn {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  transition: transform 0.3s ease, color 0.2s, background 0.2s;
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  color: #b0b8c1;
+  font-size: 1.3rem;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+    color: #e53935;
+    background: #ffeaea;
+    border-radius: 50%;
+  }
+}
+
+.favItem {
+  border-radius: 20px;
+  background: #e8e8e8;
+  padding: 15px 25px 20px 25px;
+  position: relative;
+  box-shadow: 0 1px 8px rgba(26, 110, 216, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 280px;
+  box-sizing: border-box;
+}
+
+.city {
+  color: #000;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.date {
+  color: #7a8ca3;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+
+  .time {
+    display: inline-block;
+    margin-left: 8px;
+    color: #222;
+    font-size: 20px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+}
+
+.temp {
+  color: #222;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.weather {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.weatherIcon {
+  width: 64px;
+  height: 64px;
+}
+
+.weatherDesc {
+  font-size: 1rem;
+  color: #3a4a5d;
+  text-transform: capitalize;
+  font-weight: 500;
+}

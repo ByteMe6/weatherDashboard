@@ -16,7 +16,14 @@ import {
 } from "firebase/auth";
 import app from "./firebase";
 
-export function Header({ onLogout }) {
+import { Fav } from "../Fauvorite/Fav";
+
+export function Header({
+  favoriteWeather,
+  removeFromFavorite,
+  login,
+  ...props
+}) {
   const [showUserModal, setShowUserModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
@@ -26,6 +33,8 @@ export function Header({ onLogout }) {
   const [emailError, setEmailError] = useState("");
   const [loading, setLoading] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // const [isFavOpen, setFavOpen] = useState(false); // удалено
 
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString("ru-RU", {
@@ -433,6 +442,16 @@ export function Header({ onLogout }) {
                   />
                 </button>
               </li>
+              <li
+                className={style.LogInHeaderItem}
+                data-aos="fade-left"
+                data-aos-delay="800"
+              >
+                <Fav
+                  items={favoriteWeather}
+                  onRemove={removeFromFavorite}
+                />
+              </li>
             </>
           )}
         </ul>
@@ -658,6 +677,11 @@ export function Header({ onLogout }) {
                 >
                   Account
                 </button>
+                <Fav
+                  items={favoriteWeather}
+                  onRemove={removeFromFavorite}
+                  isLogin={login}
+                />
               </>
             )}
           </div>
