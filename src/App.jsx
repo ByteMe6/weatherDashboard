@@ -21,6 +21,29 @@ function App() {
     setLogin(!!user);
   }, [user]);
 
+// Завантаження улюблених при старті
+React.useEffect(() => {
+  const savedFavorites = localStorage.getItem('favoriteWeather');
+  if (savedFavorites) {
+    try {
+      const parsed = JSON.parse(savedFavorites);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        setFavoriteWeather(parsed);
+      }
+    } catch (e) {
+      console.error("Помилка читання favoriteWeather", e);
+    }
+  }
+}, []);
+
+// Збереження при зміні
+React.useEffect(() => {
+  if (favoriteWeather.length > 0) {
+    localStorage.setItem('favoriteWeather', JSON.stringify(favoriteWeather));
+  }
+}, [favoriteWeather]);
+
+
   if (loading) {
     return <div>Loading...</div>;
   }

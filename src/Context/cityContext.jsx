@@ -105,6 +105,29 @@ export const CityProvider = ({ children }) => {
     fetchWeather();
   }, [city]);
 
+useEffect(() => {
+  const savedWeatherData = localStorage.getItem('weatherData');
+  if (savedWeatherData) {
+    try {
+      const parsed = JSON.parse(savedWeatherData);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        setWheatherData(parsed);
+      }
+    } catch (e) {
+      console.error("Помилка читання localStorage", e);
+    }
+  }
+}, []);
+
+
+useEffect(() => {
+  // Не перезаписуємо порожнім масивом після оновлення сторінки
+  if (wheatherData.length > 0) {
+    localStorage.setItem('weatherData', JSON.stringify(wheatherData));
+  }
+}, [wheatherData]);
+
+
   useEffect(() => {
     if (!city || !wheatherData.length) {
       setCurrentWeather(null);
