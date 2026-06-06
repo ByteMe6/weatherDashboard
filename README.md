@@ -20,7 +20,7 @@ npm run deploy
 
 ## 🌐 Демо
 
-Сайт доступен по адресу: **https://bytime6.github.io/weatherDashboard/**
+Сайт доступен по адресу: **https://byteme6.github.io/weatherDashboard/**
 
 ## 🔧 Настройка Firebase
 
