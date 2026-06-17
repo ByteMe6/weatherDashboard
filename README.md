@@ -1,85 +1,55 @@
 # Weather Dashboard
 
-Интерактивная панель погоды, созданная с использованием React и Vite.
+Interactive weather dashboard — search cities, track forecasts, save favorites.
 
-## 🚀 Быстрый старт
+**[Live Demo](https://byteme6.github.io/weatherDashboard/)** · [Русский](./README.ru.md)
+
+## Features
+
+- Current weather for multiple cities
+- Hourly and weekly forecasts
+- Detailed weather breakdown (humidity, wind, pressure)
+- Save favorite cities (requires login)
+- News section
+- Firebase authentication
+- Charts powered by Chart.js
+- Smooth animations with Framer Motion and AOS
+
+## Tech Stack
+
+| | |
+|---|---|
+| Framework | React 19, Vite |
+| Styling | SCSS, Bootstrap 5 |
+| Auth | Firebase |
+| Weather API | OpenWeatherMap |
+| Charts | Chart.js, react-chartjs-2 |
+| Animations | Framer Motion, AOS |
+| Notifications | react-toastify |
+| Deploy | GitHub Pages (Actions) |
+
+## Setup
 
 ```bash
-# Установка зависимостей
+git clone https://github.com/ByteMe6/weatherDashboard
+cd weatherDashboard
+cp .env.example .env
 npm install
-
-# Запуск в режиме разработки
 npm run dev
-
-# Сборка для продакшена
-npm run build
-
-# Деплой на GitHub Pages
-npm run deploy
 ```
 
-## 🌐 Демо
+Fill in `.env` with your Firebase credentials:
 
-Сайт доступен по адресу: **https://byteme6.github.io/weatherDashboard/**
-
-## 🔧 Настройка Firebase
-
-
-### Для локальной разработки:
-1. Скопируйте `firebase-config.example` в `.env`
-2. Замените значения на ваши реальные Firebase конфигурации
-
-### Для GitHub Pages:
-1. Перейдите в Settings → Secrets and variables → Actions
-2. Добавьте следующие secrets:
-   - `FIREBASE_API_KEY`
-   - `FIREBASE_AUTH_DOMAIN`
-   - `FIREBASE_PROJECT_ID`
-   - `FIREBASE_STORAGE_BUCKET`
-   - `FIREBASE_MESSAGING_SENDER_ID`
-   - `FIREBASE_APP_ID`
-   - `FIREBASE_MEASUREMENT_ID`
-
-## 🛠 Технологии
-
-- React 19
-- Vite
-- SCSS
-- Firebase
-- Bootstrap
-- React Icons
-
-## 📁 Структура проекта
-
-```
-src/
-├── Components/          # React компоненты
-│   ├── Container/      # Контейнер приложения
-│   ├── Footer/         # Подвал
-│   ├── Header/         # Заголовок с авторизацией
-│   ├── Hero/           # Главная секция
-│   ├── News/           # Новости
-│   ├── Slider/         # Слайдер
-│   └── Weather/        # Компоненты погоды
-├── Context/            # React контексты
-├── hooks/              # Пользовательские хуки
-└── images/             # Изображения и видео
+```env
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+VITE_FIREBASE_MEASUREMENT_ID=
 ```
 
-## 🚀 Деплой
+## Deploy
 
-### Автоматический деплой
-При каждом пуше в ветку `master` GitHub Actions автоматически собирает и деплоит проект.
-
-### Ручной деплой
-```bash
-npm run deploy
-```
-
-## ✨ Особенности
-
-- Адаптивный дизайн
-- Интеграция с Firebase для авторизации
-- Анимированные погодные эффекты
-- Прогноз погоды на неделю
-- Детальная информация о погодных условиях
+Push to `master` — GitHub Actions builds and deploys to GitHub Pages automatically.
